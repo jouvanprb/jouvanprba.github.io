@@ -123,6 +123,11 @@ $stars-md: create-stars(100);
       animation: floatPlanet 20s ease-in-out infinite alternate;
       opacity: 0.95;
     }
+
+    @media (max-width: 849px) {
+      &::before { opacity: 0.15; }
+      &::after { opacity: 0.15; }
+    }
   }
 
   // ---------- LAPISAN BINTANG ----------
@@ -211,7 +216,6 @@ $stars-md: create-stars(100);
     animation: shoot3 3s infinite linear 2.5s both;
   }
 
-  // ---------- ROKET MELUNCUR ----------
 
   /* Framework color */
   --main-bg: transparent;
@@ -261,6 +265,14 @@ $stars-md: create-stars(100);
   --search-border-color: transparent;
   --search-icon-color: rgb(100 102 105);
   --input-focus-border-color: rgba(255, 255, 255, 0.2);
+
+  // Pemasangan Background Mask (Glassmorphism murni transparan) pada Wrapper dan TOC Bar
+  #topbar-wrapper, #toc-bar {
+    background: transparent !important; // Latar 100% transparan
+    backdrop-filter: blur(15px) !important; // Blur tebal agar teks tersamarkan menjadi embun
+    -webkit-backdrop-filter: blur(15px) !important;
+    z-index: 999 !important; // Mencegah highlight table lompat ke atas header
+  }
 
   /* Home page */
   --post-list-text-color: rgb(175 176 177);
