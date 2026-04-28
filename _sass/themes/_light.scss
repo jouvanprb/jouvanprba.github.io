@@ -1,66 +1,75 @@
-// ====================================================
-// FUNCTIONS & KEYFRAMES (LIGHT MODE)
-// ====================================================
-
-@keyframes moonRetreat {
-  0%   { transform: translateX(0) translateY(0) scale(1); opacity: 1; }
-  100% { transform: translateX(150px) translateY(150px) scale(0.1); opacity: 0; }
+@function create-dust($n, $colors: ('#fff9c4', '#ffeaa7', '#e3f2fd', '#81ecec', '#ffffff')) {
+  $x0: random(2000);
+  $y0: random(2000);
+  $c0: nth($colors, random(length($colors)));
+  $value: '#{$x0}px #{$y0}px 3px 1px #{$c0}, #{$x0}px #{$y0 + 2000}px 3px 1px #{$c0}';
+  @for $i from 2 through $n {
+    $x: random(2000);
+    $y: random(2000);
+    $color: nth($colors, random(length($colors)));
+    $value: '#{$value}, #{$x}px #{$y}px 4px 1px #{$color}, #{$x}px #{$y + 2000}px 2px 1px #{$color}';
+  }
+  @return unquote($value);
 }
+
+$dust-sm: create-dust(150);
+$dust-md: create-dust(50);
 
 @keyframes sunArrive {
   0%   { transform: translateY(300px) scale(0.1) rotate(-45deg); opacity: 0; filter: drop-shadow(0 0 0 transparent); }
-  40%  { transform: translateY(-20px) scale(1.05) rotate(10deg); opacity: 1; filter: drop-shadow(0 0 30px rgba(255, 224, 130, 0.3)); }
-  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 20px rgba(255, 224, 130, 0.2)); }
+  40%  { transform: translateY(-20px) scale(1.05) rotate(10deg); opacity: 1; filter: drop-shadow(0 0 40px rgba(255, 224, 130, 0.4)); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 30px rgba(255, 224, 130, 0.3)); }
 }
 
 @keyframes floatSun {
   from { transform: translateY(0) scale(1) rotate(0deg); }
-  to   { transform: translateY(-10px) scale(1.02) rotate(5deg); } // Rotasi sun sangat pelan
+  to   { transform: translateY(-10px) scale(1.02) rotate(5deg); }
 }
 
-@keyframes floatBlob1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(30px, -40px) scale(1.1); }
-  100% { transform: translate(0, 0) scale(1); }
+@keyframes floatDust {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-1000px) translateX(30px); }
+  100% { transform: translateY(-2000px) translateX(-20px); }
 }
 
-@keyframes floatBlob2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-40px, 30px) scale(1.15); }
-  100% { transform: translate(0, 0) scale(1); }
+@keyframes pulseDust {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.9; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes godRaysSweep {
+  from { transform: rotate(-5deg) scale(1.2); opacity: 0.5; }
+  to   { transform: rotate(5deg) scale(1.3); opacity: 0.8; }
+}
+
+@keyframes driftClouds {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-20vw); }
+}
+
+// Animasi pergerakan lembut untuk gradien latar utama
+@keyframes moveMist {
+  from { background-position: 0% 0%, 0% 0%, 0% 0%; }
+  to   { background-position: 100% 80%, 80% 100%, 100% 60%; }
 }
 
 @mixin styles {
   color-scheme: light;
 
-  // Background Langit Pagi (Studio Ghibli/Apple Warm gradient)
-  background: linear-gradient(180deg, #e3f2fd 0%, #ffffff 60%, #fef9ef 100%) !important;
-  background-attachment: fixed !important;
-  background-size: 100vw 100vh !important;
+  // ---------- BASE: Langit Pagi Biru Kekuningan ----------
+  background: 
+    radial-gradient(ellipse at 15% 20%, rgba(255, 240, 150, 0.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 80%, rgba(180, 230, 250, 0.35) 0%, transparent 50%),
+    linear-gradient(180deg, #ebf5fa 0%, #ffffff 50%, #fffdf4 100%);
+  background-size: 200% 200%, 200% 200%, auto;
+  background-attachment: fixed;
+  animation: moveMist 40s ease-in-out infinite alternate;
 
   body {
     background: transparent !important;
 
-    // Retreating Moon (Muncul sedetik lalu hilang untuk efek transisi dari Dark ke Light)
-    &::after {
-      content: "";
-      position: fixed;
-      z-index: -2;
-      pointer-events: none;
-      top: 15%;
-      right: 15%;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: transparent;
-      box-shadow: inset -15px -15px 0 2px #d6d6d6,
-                  inset -18px -18px 0 4px rgba(255, 255, 255, 0.1),
-                  0 0 30px 0px rgba(255, 255, 255, 0.3);
-      filter: drop-shadow(0 0 10px rgba(0,0,0,0.1));
-      animation: moonRetreat 2.5s cubic-bezier(0.5, 0.05, 1, 0.5) forwards;
-    }
-
-    // Arriving Sun & Floating (Diturunkan dari Topbar agar tidak terkena efek patahan batas Blur)
+    // Matahari (SETARA dengan Planet di Dark Mode)
     &::before {
       content: "";
       position: fixed;
@@ -71,75 +80,89 @@
       width: 330px;
       height: 330px;
       border-radius: 50%;
-      // Matahari Pagi (Soft Morning Glow) yang hangat dan modern
       background: radial-gradient(circle, #ffffff 0%, #fffdf4 30%, #fff3ce 80%, transparent 100%);
-      box-shadow: inset 0 0 30px rgba(255, 255, 255, 1),
-                  0 0 80px 20px rgba(255, 224, 130, 0.3);
-      filter: blur(2px); // Memberikan efek sunbloom cinematic
+      box-shadow: inset 0 0 40px rgba(255, 255, 255, 1),
+                  0 0 100px 30px rgba(255, 224, 130, 0.4);
+      filter: blur(2px);
       animation: 
         sunArrive 3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
         floatSun 15s ease-in-out 3s infinite alternate;
     }
-    
-  }
 
-  // ---------- PROPERTI MODERN (AMBIENT FOG BLOBS & PAN CLOUDS) ----------
-  #main-wrapper {
-    position: relative;
-    z-index: 1;
-    // Abstract Modern Mist (Gumpalan Embun Pagi di kiri bawah)
-     &::before {
-      content: "";
-      position: fixed;
-      bottom: -15%;
-      left: -15%;
-      width: 80vw;
-      height: 80vw;
-      border-radius: 50%;
-      background: 
-        // Sparkles pattern (ditumpuk)
-        radial-gradient(2px 2px at 15% 20%, #fdcb6e, transparent),
-        radial-gradient(1.5px 1.5px at 30% 60%, #e17055, transparent),
-        radial-gradient(2px 2px at 50% 10%, #fdcb6e, transparent),
-        radial-gradient(1px 1px at 70% 80%, #ffffff, transparent),
-        radial-gradient(2px 2px at 85% 30%, #e17055, transparent),
-        radial-gradient(1px 1px at 90% 70%, #fdcb6e, transparent),
-        // Blob utama (ditimpa di atas sparkles)
-        radial-gradient(circle, rgba(254, 249, 239, 0.6) 0%, rgba(227, 242, 253, 0.4) 40%, transparent 70%);
-      filter: blur(60px);
-      z-index: -2;
-      pointer-events: none;
-      animation: floatBlob1 30s ease-in-out infinite alternate;
-      opacity: 0.8; // agar sparkles tetap samar
-    }
-
-    // Abstract Modern Mist (Awan Mengudara di kanan tengah) + Sun Rays
+    // God Rays (Sinar Bias Sinematik Pagi) PADA OPACITY KUAT (TERLIHAT)
     &::after {
       content: "";
       position: fixed;
-      top: 20%;
-      right: -10%;
-      width: 60vw;
-      height: 60vw;
-      border-radius: 50%;
-      background: 
-        // Sun rays tipis dari pojok layar
-        linear-gradient(215deg, rgba(255,255,255,0.5) 0%, transparent 40%),
-        // Blob mist putih di kanan
-        // Blob mist hangat di kanan
-        radial-gradient(circle, rgba(253, 203, 110, 0.2) 0%, transparent 60%);
-      filter: blur(50px);
-      z-index: -2;
+      top: -50%;
+      right: -50%;
+      width: 200vw;
+      height: 200vh;
+      z-index: -3;
       pointer-events: none;
-      animation: floatBlob2 30s ease-in-out infinite alternate; // Layer 1 (deepest) 30s cycle
+      background: repeating-linear-gradient(
+        -35deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 250, 210, 0.4) 4%,
+        rgba(255, 255, 255, 0) 8%,
+        rgba(255, 240, 150, 0.5) 12%,
+        rgba(255, 255, 255, 0) 16%
+      );
+      transform-origin: top right;
+      animation: godRaysSweep 25s infinite alternate ease-in-out;
     }
-    
+
+    // Khusus layar Mobile: Geser matahari ke pucuk kanan atas agar tidak mengganggu bacaan
+    @media (max-width: 849px) {
+      &::after { opacity: 0.10; } // God rays
+      &::before { 
+        top: -120px !important;
+        right: -160px !important;
+        opacity: 0.6;
+      }
+    }
   }
 
+  // ---------- DANCING DUST MOTES (Partikel Debu Terbang) ----------
+  #main-wrapper {
+    position: relative;
+    z-index: 1;
+
+    &::before, &::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    // Dust Layer 1
+    &::before {
+      width: 1px;
+      height: 1px;
+      background: transparent;
+      box-shadow: $dust-sm;
+      animation: floatDust 80s linear infinite,
+                 pulseDust 6s ease-in-out infinite alternate;
+    }
+
+    // Dust Layer 2
+    &::after {
+      width: 2px;
+      height: 2px;
+      background: transparent;
+      box-shadow: $dust-md;
+      animation: floatDust 120s linear infinite,
+                 pulseDust 8s ease-in-out infinite alternate;
+      animation-delay: -30s;
+    }
+  }
+
+  // ---------- VARIABEL WARNA (TEMA TERANG) ----------
   /* Framework color */
-  --main-bg: #fef9ef;
-  --mask-bg: #dfe6e9;
-  --main-border-color: #dfe6e9;
+  --main-bg: transparent; // Diselaraskan dengan dark mode
+  --mask-bg: rgba(223, 230, 233, 0.6);
+  --main-border-color: rgba(223, 230, 233, 0.4);
 
   /* Common color */
   --text-color: #2d3436;
@@ -147,52 +170,52 @@
   --text-muted-highlight-color: inherit;
   --heading-color: #2d3436;
   --label-color: #2d3436;
-  --blockquote-border-color: #dfe6e9;
+  --blockquote-border-color: rgba(223, 230, 233, 0.8);
   --blockquote-text-color: #636e72;
   --link-color: #0984e3;
-  --link-underline-color: #0984e3;
-  --button-bg: #ffffff;
-  --btn-border-color: #dfe6e9;
+  --link-underline-color: rgba(9, 132, 227, 0.6);
+  --button-bg: rgba(255, 255, 255, 0.6);
+  --btn-border-color: rgba(223, 230, 233, 0.8);
   --btn-backtotop-color: #686868;
-  --btn-backtotop-border-color: #f1f1f1;
+  --btn-backtotop-border-color: rgba(241, 241, 241, 0.8);
+  --card-header-bg: rgba(248, 249, 250, 0.5);
   --checkbox-color: #c5c5c5;
   --checkbox-checked-color: #07a8f7;
   --img-bg: radial-gradient(circle, rgb(255 255 255) 0%, rgb(239 239 239) 100%);
   --shimmer-bg: linear-gradient(
     90deg,
     rgb(250 250 250 / 0%) 0%,
-    rgb(232 230 230 / 100%) 50%,
+    rgb(232 230 230 / 40%) 50%,
     rgb(250 250 250 / 0%) 100%
   );
 
   /* Sidebar */
-  --site-title-color: #2d3436;
-  --site-subtitle-color: #636e72;
+  --site-title-color: #1a1a1a;
+  --site-subtitle-color: #3a3a3a;
   --sidebar-bg: transparent;
   --sidebar-border-color: transparent;
-  --sidebar-muted-color: #636e72;
-  --sidebar-active-color: #1d1d1d;
-  --sidebar-hover-bg: rgb(223 233 241 / 64%);
+  --sidebar-muted-color: #3a3a3a;
+  --sidebar-active-color: #000000;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.4);
   --sidebar-btn-bg: transparent;
-  --sidebar-btn-color: #2d3436;
-  --avatar-border-color: transparent;
+  --sidebar-btn-color: #1a1a1a;
+  --avatar-border-color: rgba(0, 0, 0, 0.1);
 
   /* Topbar */
   --topbar-bg: transparent;
   --topbar-text-color: #2d3436;
   --search-border-color: transparent;
   --search-icon-color: #636e72;
-  --input-focus-border-color: #0984e3;
+  --input-focus-border-color: rgba(9, 132, 227, 0.5);
 
-  // Pemasangan Background Mask (Glassmorphism murni transparan) pada Wrapper dan TOC Bar
+  // Glassmorphism untuk Topbar & TOC (SAMA DENGAN DARK)
   #topbar-wrapper, #toc-bar {
-    background: transparent !important; // Latar 100% transparan dikembalikan seperti semula
-    backdrop-filter: blur(15px) !important; // Blur tebal khas embun
+    background: transparent !important;
+    backdrop-filter: blur(15px) !important;
     -webkit-backdrop-filter: blur(15px) !important;
-    z-index: 999 !important; // Mencegah highlight table lompat ke atas header
+    z-index: 999 !important;
   }
 
-  // Hilangkan balok penutup TOC dan paksa Search Input tembus pandang
   .toc-border-cover, 
   search,
   #search-input,
@@ -205,38 +228,39 @@
   /* Home page */
   --post-list-text-color: dimgray;
   --btn-patinator-text-color: #555555;
-  --btn-paginator-hover-color: var(--sidebar-bg);
+  --btn-paginator-hover-color: rgba(223, 230, 233, 0.5);
 
   /* Posts */
   --toc-highlight: #e17055;
-  --toc-popup-border-color: #dfe6e9;
+  --toc-popup-border-color: rgba(223, 230, 233, 0.8);
+  --tag-hover: rgb(222 226 230);
+  --tb-odd-bg: rgba(254, 249, 239, 0.4);
+  --tb-even-bg: rgba(255, 255, 255, 0.4);
+  --tb-border-color: var(--tb-odd-bg);
+  --footnote-target-bg: #f8f9fa;
   --btn-share-color: #636e72;
   --btn-share-hover-color: #0984e3;
-  --card-bg: white;
-  --card-hover-bg: white;
+  --card-bg: rgba(255, 255, 255, 0.65);
+  --card-hover-bg: rgba(255, 255, 255, 0.9);
   --card-shadow: rgba(225, 112, 85, 0.15) 0 4px 15px; 
-  --footnote-target-bg: #f8f9fa;
-  --tb-odd-bg: #fef9ef;
-  --tb-border-color: #dfe6e9;
-  --dash-color: #dfe6e9;
-  --kbd-wrap-color: #dfe6e9;
+  --kbd-wrap-color: rgba(223, 230, 233, 0.8);
   --kbd-text-color: var(--text-color);
-  --kbd-bg-color: #f8f9fa;
+  --kbd-bg-color: rgba(248, 249, 250, 0.8);
   --prompt-text-color: rgb(46 46 46 / 77%);
   --prompt-tip-bg: rgb(123 247 144 / 20%);
   --prompt-tip-icon-color: #03b303;
-  --prompt-info-bg: #e1f5fe;
+  --prompt-info-bg: rgba(225, 245, 254, 0.8);
   --prompt-info-icon-color: #0070cb;
-  --prompt-warning-bg: rgb(255 243 205);
+  --prompt-warning-bg: rgba(255, 243, 205, 0.8);
   --prompt-warning-icon-color: #ef9c03;
   --prompt-danger-bg: rgb(248 215 218 / 56%);
   --prompt-danger-icon-color: #df3c30;
 
   /* Tags */
-  --tag-border: #dee2e6;
+  --tag-border: rgba(222, 226, 230, 0.5);
   --tag-shadow: var(--btn-border-color);
-  --tag-hover: rgb(222 226 230);
-  --search-tag-bg: #f8f9fa;
+  --dash-color: #dfe6e9;
+  --search-tag-bg: rgba(248, 249, 250, 0.8);
 
   /* Categories */
   --categories-border: rgb(0 0 0 / 12.5%);
@@ -244,13 +268,13 @@
   --categories-icon-hover-color: darkslategray;
 
   /* Archive */
-  --timeline-color: rgb(0 0 0 / 7.5%);
   --timeline-node-bg: #c2c6cc;
+  --timeline-color: rgb(0 0 0 / 7.5%);
   --timeline-year-dot-color: #ffffff;
 
-  /* --- Custom code light mode colors --- */
-  --language-border-color: #ececec;
-  --highlight-bg-color: #f6f8fa;
+  /* Code highlight colors */
+  --language-border-color: rgba(236, 236, 236, 0.5);
+  --highlight-bg-color: rgba(246, 248, 250, 0.8);
   --highlighter-rouge-color: #3f596f;
   --highlight-lineno-color: #9e9e9e;
   --inline-code-bg: rgb(25 25 28 / 5%);
@@ -259,87 +283,71 @@
   --code-header-muted-color: #e5e5e5;
   --code-header-icon-color: #c9c8c8;
   --clipboard-checked-color: #43c743;
+  --filepath-text-color: #6a6a6a;
 
   [class^='prompt-'] {
     --link-underline-color: rgb(219 216 216);
   }
 
-  .dark {
-    display: none;
+  .dark { display: none; }
+
+  /* Categories (Diselaraskan dengan dark mode) */
+  .categories.card,
+  .list-group-item {
+    background-color: var(--card-bg);
   }
 
-  /* --- Syntax highlight theme from `rougify style github` --- */
+  .categories {
+    .card-header {
+      background-color: var(--card-header-bg);
+    }
 
-  .highlight table td {
-    padding: 5px;
+    .list-group-item {
+      border-left: none;
+      border-right: none;
+      padding-left: 2rem;
+      border-color: var(--categories-border);
+
+      &:last-child {
+        border-bottom-color: var(--card-bg);
+      }
+    }
   }
 
-  .highlight table pre {
-    margin: 0;
+  #archives li:nth-child(odd) {
+    background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0)
+    );
   }
 
+  // ---------- SINTAKS HIGHLIGHTING (TEMA GITHUB) ----------
+  .highlight table td { padding: 5px; }
+  .highlight table pre { margin: 0; }
   .highlight,
-  .highlight .w {
-    color: #24292f;
-    background-color: #f6f8fa;
-  }
-
+  .highlight .w { color: #24292f; background-color: #f6f8fa; }
   .highlight .k,
   .highlight .kd,
   .highlight .kn,
   .highlight .kp,
   .highlight .kr,
   .highlight .kt,
-  .highlight .kv {
-    color: #cf222e;
-  }
-
-  .highlight .gr {
-    color: #f6f8fa;
-  }
-
-  .highlight .gd {
-    color: #82071e;
-    background-color: #ffebe9;
-  }
-
-  .highlight .nb {
-    color: #953800;
-  }
-
-  .highlight .nc {
-    color: #953800;
-  }
-
-  .highlight .no {
-    color: #953800;
-  }
-
-  .highlight .nn {
-    color: #953800;
-  }
-
-  .highlight .sr {
-    color: #116329;
-  }
-
-  .highlight .na {
-    color: #116329;
-  }
-
-  .highlight .nt {
-    color: #116329;
-  }
-
-  .highlight .gi {
-    color: #116329;
-    background-color: #dafbe1;
-  }
-
-  .highlight .kc {
-    color: #0550ae;
-  }
-
+  .highlight .kv { color: #cf222e; }
+  .highlight .gr { color: #f6f8fa; }
+  .highlight .gd { color: #82071e; background-color: #ffebe9; }
+  .highlight .nb { color: #953800; }
+  .highlight .nc { color: #953800; }
+  .highlight .no { color: #953800; }
+  .highlight .nn { color: #953800; }
+  .highlight .sr { color: #116329; }
+  .highlight .na { color: #116329; }
+  .highlight .nt { color: #116329; }
+  .highlight .gi { color: #116329; background-color: #dafbe1; }
+  .highlight .kc { color: #0550ae; }
   .highlight .l,
   .highlight .ld,
   .highlight .m,
@@ -349,53 +357,21 @@
   .highlight .mi,
   .highlight .il,
   .highlight .mo,
-  .highlight .mx {
-    color: #0550ae;
-  }
-
-  .highlight .sb {
-    color: #0550ae;
-  }
-
-  .highlight .bp {
-    color: #0550ae;
-  }
-
-  .highlight .ne {
-    color: #0550ae;
-  }
-
-  .highlight .nl {
-    color: #0550ae;
-  }
-
-  .highlight .py {
-    color: #0550ae;
-  }
-
+  .highlight .mx { color: #0550ae; }
+  .highlight .sb { color: #0550ae; }
+  .highlight .bp { color: #0550ae; }
+  .highlight .ne { color: #0550ae; }
+  .highlight .nl { color: #0550ae; }
+  .highlight .py { color: #0550ae; }
   .highlight .nv,
   .highlight .vc,
   .highlight .vg,
   .highlight .vi,
-  .highlight .vm {
-    color: #0550ae;
-  }
-
+  .highlight .vm { color: #0550ae; }
   .highlight .o,
-  .highlight .ow {
-    color: #0550ae;
-  }
-
-  .highlight .gh {
-    color: #0550ae;
-    font-weight: bold;
-  }
-
-  .highlight .gu {
-    color: #0550ae;
-    font-weight: bold;
-  }
-
+  .highlight .ow { color: #0550ae; }
+  .highlight .gh { color: #0550ae; font-weight: bold; }
+  .highlight .gu { color: #0550ae; font-weight: bold; }
   .highlight .s,
   .highlight .sa,
   .highlight .sc,
@@ -406,24 +382,11 @@
   .highlight .sh,
   .highlight .sx,
   .highlight .s1,
-  .highlight .ss {
-    color: #0a3069;
-  }
-
-  .highlight .nd {
-    color: #8250df;
-  }
-
+  .highlight .ss { color: #0a3069; }
+  .highlight .nd { color: #8250df; }
   .highlight .nf,
-  .highlight .fm {
-    color: #8250df;
-  }
-
-  .highlight .err {
-    color: #f6f8fa;
-    background-color: #82071e;
-  }
-
+  .highlight .fm { color: #8250df; }
+  .highlight .err { color: #f6f8fa; background-color: #82071e; }
   .highlight .c,
   .highlight .ch,
   .highlight .cd,
@@ -431,142 +394,106 @@
   .highlight .cp,
   .highlight .cpf,
   .highlight .c1,
-  .highlight .cs {
-    color: #68717a;
-  }
+  .highlight .cs { color: #68717a; }
+  .highlight .gl { color: #68717a; }
+  .highlight .gt { color: #68717a; }
+  .highlight .ni { color: #24292f; }
+  .highlight .si { color: #24292f; }
+  .highlight .ge { color: #24292f; font-style: italic; }
+  .highlight .gs { color: #24292f; font-weight: bold; }
 
-  .highlight .gl {
-    color: #68717a;
-  }
 
-  .highlight .gt {
-    color: #68717a;
-  }
 
-  .highlight .ni {
-    color: #24292f;
-  }
-
-  .highlight .si {
-    color: #24292f;
-  }
-
-  .highlight .ge {
-    color: #24292f;
-    font-style: italic;
-  }
-
-  .highlight .gs {
-    color: #24292f;
-    font-weight: bold;
-  }
-  @keyframes leafFall {
-    0% {
-      top: -10vh;                     // mulainya dari atas viewport (tersembunyi)
-      transform: rotate(0deg) scale(0.8);
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;                     // opacity transisi tanpa henti
-    }
-    90% {
-      opacity: 1;
-    }
-    100% {
-      top: 110vh;                     // berakhir di bawah viewport (tersembunyi)
-      transform: rotate(720deg) scale(1);
-      opacity: 0;
-    }
-  }
-
-  // Container untuk semua dekorasi terbang
+  // ---------- PARALLAX CLOUDS (Awan Fajar Terang Biru ke Kuning) ----------
   .flying-decorations {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     pointer-events: none;
-    z-index: -1;
-    overflow: hidden;                 // potong daun saat di luar area
+    z-index: -3; // Di belakang matahari dan debu
+    overflow: hidden;
 
-    .falling-leaf {
+    // Layer 1 - Awan Belakang (Lambat) - Nuansa soft blue ke bisque
+    &::before {
+      content: "";
       position: absolute;
-      top: -10vh;              // <-- tambahkan ini, supaya start dari atas luar layar
-      font-size: 24px;
-      animation: leafFall linear infinite;
-      animation-fill-mode: backwards; // opsional, jaga-jaga jika ada delay
-      opacity: 0.7;
-      filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
+      bottom: -20vh;
+      left: 0;
+      width: 200vw;
+      height: 70vh;
+      background: 
+        radial-gradient(ellipse at 20% 100%, rgba(227, 242, 253, 0.8) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 100%, rgba(255, 249, 196, 0.8) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 120%, rgba(235, 245, 255, 0.9) 0%, transparent 70%);
+      filter: blur(20px);
+      animation: driftClouds 80s linear infinite alternate;
+      opacity: 0.9;
+    }
 
-      &::before {
-        content: '🍃'; // atau🍃, 🌸, 🍂, 🍁
-      }
+    // Layer 2 - Awan Depan (Cepat) - Mentari pagi lemon & cerah langit
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -15vh;
+      left: -50vw;
+      width: 300vw;
+      height: 50vh;
+      background: 
+        radial-gradient(ellipse at 30% 100%, rgba(255, 253, 230, 0.8) 0%, transparent 50%),
+        radial-gradient(ellipse at 70% 100%, rgba(210, 235, 250, 0.7) 0%, transparent 50%);
+      filter: blur(15px);
+      animation: driftClouds 50s linear infinite alternate-reverse;
+      opacity: 1;
     }
   }
 
-  // Media query: matikan animasi jika user tidak ingin gerakan
   @media (prefers-reduced-motion: reduce) {
-    .flying-decorations .falling-leaf {
+    .flying-decorations::before, .flying-decorations::after {
       animation: none !important;
       display: none;
     }
   }
-    // ========== MOBILE: Kurangi gangguan visual ==========
+
+  // ========== TAMPILAN SELULER (SEPERTI DARK MODE) ==========
   @media (max-width: 849px) {
-    // Matahari (body::before) dibuat sangat transparan
-    body::before {
-      opacity: 0.08;
-    }
-
-    // Blob embun kiri (blob + sparkles) kurangi opacity
-    #main-wrapper::before {
-      opacity: 0.3;
-    }
-
-    // Blob kanan + sun rays
-    #main-wrapper::after {
-      opacity: 0.2;
-    }
-
-    // Daun jatuh: bisa dihilangkan total atau dikecilkan
-    .flying-decorations .falling-leaf {
-      // display: none;           // hilangkan daun di mobile
-      // Alternatif jika ingin tetap ada:
-      font-size: 8px;
-      opacity: 0.02;
-    }
+    .flying-decorations::before { opacity: 0.4; }
+    .flying-decorations::after { opacity: 0.5; }
+    #main-wrapper::before, #main-wrapper::after { opacity: 0.3; }
   }
-  // ========== Pengaturan Jarak Konten & Sidebar ==========
-  // Kurangi gutter antar kolom
+
+  // ========== PENGATURAN JARAK KONTEN & SIDEBAR (SAMA PERSIS DENGAN DARK) ==========
   #main-wrapper .row {
-    --bs-gutter-x: 0.75rem; // default 1.5rem, jadi setengahnya
+    --bs-gutter-x: 0.75rem;
   }
 
-  // Perkecil padding horizontal container
   #main-wrapper .container {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 
-  // Sesuaikan padding main dan aside
   #main-wrapper main {
-    padding-right: 0.25rem; // beri ruang kecil ke aside
+    padding-right: 0.25rem;
   }
 
-  #main-wrapper aside {
+  #main-wrapper #panel-wrapper {
     padding-left: 0.25rem;
   }
 
-  // Opsional: ubah proporsi kolom jika ingin sidebar lebih kecil
-  @media (min-width: 1200px) { // khusus xl
+  @media (min-width: 1200px) {
     #main-wrapper main {
       flex: 0 0 auto;
-      width: 80%; // lebih lebar
+      width: 80%;
     }
-    #main-wrapper aside {
+    #main-wrapper #panel-wrapper {
       flex: 0 0 auto;
-      width: 20%; // sidebar lebih sempit
+      width: 20%;
     }
+  }
+
+  // Tarik Sidebar agar berada di atas efek kabut/overlay #main-wrapper
+  #sidebar {
+    z-index: 10 !important;
   }
 }

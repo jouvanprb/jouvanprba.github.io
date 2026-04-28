@@ -85,8 +85,8 @@ $stars-md: create-stars(100);
       position: fixed;
       z-index: -2;
       pointer-events: none;
-      top: 15%;
-      right: 15%;
+      top: 3%;
+      right: 3%;
       width: 100px;
       height: 100px;
       border-radius: 50%;
@@ -541,7 +541,7 @@ $stars-md: create-stars(100);
     padding-right: 0.25rem; // beri ruang kecil ke aside
   }
 
-  #main-wrapper aside {
+  #main-wrapper #panel-wrapper {
     padding-left: 0.25rem;
   }
 
@@ -551,9 +551,9 @@ $stars-md: create-stars(100);
       flex: 0 0 auto;
       width: 80%; // lebih lebar
     }
-    #main-wrapper aside {
+    #main-wrapper #panel-wrapper {
       flex: 0 0 auto;
       width: 20%; // sidebar lebih sempit
     }
-}
+  }
 }
