@@ -524,4 +524,36 @@ $stars-md: create-stars(100);
   .highlight .ss {
     color: #90a959;
   }
+  // ========== Pengaturan Jarak Konten & Sidebar ==========
+  // Kurangi gutter antar kolom
+  #main-wrapper .row {
+    --bs-gutter-x: 0.75rem; // default 1.5rem, jadi setengahnya
+  }
+
+  // Perkecil padding horizontal container
+  #main-wrapper .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  // Sesuaikan padding main dan aside
+  #main-wrapper main {
+    padding-right: 0.25rem; // beri ruang kecil ke aside
+  }
+
+  #main-wrapper aside {
+    padding-left: 0.25rem;
+  }
+
+  // Opsional: ubah proporsi kolom jika ingin sidebar lebih kecil
+  @media (min-width: 1200px) { // khusus xl
+    #main-wrapper main {
+      flex: 0 0 auto;
+      width: 80%; // lebih lebar
+    }
+    #main-wrapper aside {
+      flex: 0 0 auto;
+      width: 20%; // sidebar lebih sempit
+    }
+}
 }

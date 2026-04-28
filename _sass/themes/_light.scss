@@ -8,21 +8,35 @@
 }
 
 @keyframes sunArrive {
-  0%   { transform: translateY(300px) scale(0.1) rotate(-45deg); opacity: 0; filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0)); }
-  40%  { transform: translateY(-20px) scale(1.1) rotate(10deg); opacity: 1; filter: drop-shadow(0 0 80px rgba(255, 235, 59, 1)); }
-  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 60px rgba(255, 235, 59, 0.6)); }
+  0%   { transform: translateY(300px) scale(0.1) rotate(-45deg); opacity: 0; filter: drop-shadow(0 0 0 transparent); }
+  40%  { transform: translateY(-20px) scale(1.05) rotate(10deg); opacity: 1; filter: drop-shadow(0 0 30px rgba(255, 224, 130, 0.3)); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 20px rgba(255, 224, 130, 0.2)); }
 }
 
 @keyframes floatSun {
   from { transform: translateY(0) scale(1) rotate(0deg); }
-  to   { transform: translateY(-20px) scale(1.05) rotate(15deg); }
+  to   { transform: translateY(-10px) scale(1.02) rotate(5deg); } // Rotasi sun sangat pelan
+}
+
+@keyframes floatBlob1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(30px, -40px) scale(1.1); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes floatBlob2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-40px, 30px) scale(1.15); }
+  100% { transform: translate(0, 0) scale(1); }
 }
 
 @mixin styles {
   color-scheme: light;
 
-  // Background Langit Siang (diletakkan di html parent agar stacking context aman)
-  background: var(--main-bg);
+  // Background Langit Pagi (Studio Ghibli/Apple Warm gradient)
+  background: linear-gradient(180deg, #e3f2fd 0%, #ffffff 60%, #fef9ef 100%) !important;
+  background-attachment: fixed !important;
+  background-size: 100vw 100vh !important;
 
   body {
     background: transparent !important;
@@ -46,67 +60,99 @@
       animation: moonRetreat 2.5s cubic-bezier(0.5, 0.05, 1, 0.5) forwards;
     }
 
-    // Arriving Sun & Floating
+    // Arriving Sun & Floating (Diturunkan dari Topbar agar tidak terkena efek patahan batas Blur)
     &::before {
       content: "";
       position: fixed;
       z-index: -2;
       pointer-events: none;
-      top: 10%;
-      right: 15%;
-      width: 120px;
-      height: 120px;
+      top: 90px;
+      right: -80px;
+      width: 330px;
+      height: 330px;
       border-radius: 50%;
-      background: radial-gradient(circle, #fffdf2 0%, #ffeb3b 40%, #fbc02d 100%);
-      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.8),
-                  0 0 60px 20px rgba(255, 235, 59, 0.6);
+      // Matahari Pagi (Soft Morning Glow) yang hangat dan modern
+      background: radial-gradient(circle, #ffffff 0%, #fffdf4 30%, #fff3ce 80%, transparent 100%);
+      box-shadow: inset 0 0 30px rgba(255, 255, 255, 1),
+                  0 0 80px 20px rgba(255, 224, 130, 0.3);
+      filter: blur(2px); // Memberikan efek sunbloom cinematic
       animation: 
-        sunArrive 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-        floatSun 12s ease-in-out 2.5s infinite alternate;
+        sunArrive 3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+        floatSun 15s ease-in-out 3s infinite alternate;
     }
+    
   }
 
-  // ---------- AWAN MENGAPUNG ----------
+  // ---------- PROPERTI MODERN (AMBIENT FOG BLOBS & PAN CLOUDS) ----------
   #main-wrapper {
-    &::before {
+    position: relative;
+    z-index: 1;
+    // Abstract Modern Mist (Gumpalan Embun Pagi di kiri bawah)
+     &::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
+      bottom: -15%;
+      left: -15%;
+      width: 80vw;
+      height: 80vw;
+      border-radius: 50%;
+      background: 
+        // Sparkles pattern (ditumpuk)
+        radial-gradient(2px 2px at 15% 20%, #fdcb6e, transparent),
+        radial-gradient(1.5px 1.5px at 30% 60%, #e17055, transparent),
+        radial-gradient(2px 2px at 50% 10%, #fdcb6e, transparent),
+        radial-gradient(1px 1px at 70% 80%, #ffffff, transparent),
+        radial-gradient(2px 2px at 85% 30%, #e17055, transparent),
+        radial-gradient(1px 1px at 90% 70%, #fdcb6e, transparent),
+        // Blob utama (ditimpa di atas sparkles)
+        radial-gradient(circle, rgba(254, 249, 239, 0.6) 0%, rgba(227, 242, 253, 0.4) 40%, transparent 70%);
+      filter: blur(60px);
+      z-index: -2;
       pointer-events: none;
-      opacity: 0.6;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.9) 5%, transparent 15%),
-        radial-gradient(circle at 15% 25%, rgba(255,255,255,0.8) 8%, transparent 20%),
-        radial-gradient(circle at 40% 10%, rgba(255,255,255,0.8) 6%, transparent 18%),
-        radial-gradient(circle at 45% 15%, rgba(255,255,255,0.9) 10%, transparent 22%),
-        radial-gradient(circle at 75% 30%, rgba(255,255,255,0.7) 7%, transparent 15%),
-        radial-gradient(circle at 80% 35%, rgba(255,255,255,0.8) 9%, transparent 20%);
-      background-size: 150vw 100vh;
-      animation: panClouds 40s linear infinite;
+      animation: floatBlob1 30s ease-in-out infinite alternate;
+      opacity: 0.8; // agar sparkles tetap samar
     }
+
+    // Abstract Modern Mist (Awan Mengudara di kanan tengah) + Sun Rays
+    &::after {
+      content: "";
+      position: fixed;
+      top: 20%;
+      right: -10%;
+      width: 60vw;
+      height: 60vw;
+      border-radius: 50%;
+      background: 
+        // Sun rays tipis dari pojok layar
+        linear-gradient(215deg, rgba(255,255,255,0.5) 0%, transparent 40%),
+        // Blob mist putih di kanan
+        // Blob mist hangat di kanan
+        radial-gradient(circle, rgba(253, 203, 110, 0.2) 0%, transparent 60%);
+      filter: blur(50px);
+      z-index: -2;
+      pointer-events: none;
+      animation: floatBlob2 30s ease-in-out infinite alternate; // Layer 1 (deepest) 30s cycle
+    }
+    
   }
 
   /* Framework color */
-  --main-bg: white;
-  --mask-bg: #c1c3c5;
-  --main-border-color: #f3f3f3;
+  --main-bg: #fef9ef;
+  --mask-bg: #dfe6e9;
+  --main-border-color: #dfe6e9;
 
   /* Common color */
-  --text-color: #34343c;
-  --text-muted-color: #757575;
+  --text-color: #2d3436;
+  --text-muted-color: #636e72;
   --text-muted-highlight-color: inherit;
-  --heading-color: #2a2a2a;
-  --label-color: #585858;
-  --blockquote-border-color: #eeeeee;
-  --blockquote-text-color: #757575;
-  --link-color: #0056b2;
-  --link-underline-color: #dee2e6;
+  --heading-color: #2d3436;
+  --label-color: #2d3436;
+  --blockquote-border-color: #dfe6e9;
+  --blockquote-text-color: #636e72;
+  --link-color: #0984e3;
+  --link-underline-color: #0984e3;
   --button-bg: #ffffff;
-  --btn-border-color: #e9ecef;
+  --btn-border-color: #dfe6e9;
   --btn-backtotop-color: #686868;
   --btn-backtotop-border-color: #f1f1f1;
   --checkbox-color: #c5c5c5;
@@ -120,23 +166,41 @@
   );
 
   /* Sidebar */
-  --site-title-color: rgb(113 113 113);
-  --site-subtitle-color: #717171;
-  --sidebar-bg: #f6f8fa;
-  --sidebar-border-color: #efefef;
-  --sidebar-muted-color: #545454;
+  --site-title-color: #2d3436;
+  --site-subtitle-color: #636e72;
+  --sidebar-bg: transparent;
+  --sidebar-border-color: transparent;
+  --sidebar-muted-color: #636e72;
   --sidebar-active-color: #1d1d1d;
   --sidebar-hover-bg: rgb(223 233 241 / 64%);
-  --sidebar-btn-bg: white;
-  --sidebar-btn-color: #8e8e8e;
-  --avatar-border-color: white;
+  --sidebar-btn-bg: transparent;
+  --sidebar-btn-color: #2d3436;
+  --avatar-border-color: transparent;
 
   /* Topbar */
-  --topbar-bg: rgb(255 255 255 / 70%);
-  --topbar-text-color: rgb(78 78 78);
-  --search-border-color: rgb(240 240 240);
-  --search-icon-color: #c2c6cc;
-  --input-focus-border-color: #b8b8b8;
+  --topbar-bg: transparent;
+  --topbar-text-color: #2d3436;
+  --search-border-color: transparent;
+  --search-icon-color: #636e72;
+  --input-focus-border-color: #0984e3;
+
+  // Pemasangan Background Mask (Glassmorphism murni transparan) pada Wrapper dan TOC Bar
+  #topbar-wrapper, #toc-bar {
+    background: transparent !important; // Latar 100% transparan dikembalikan seperti semula
+    backdrop-filter: blur(15px) !important; // Blur tebal khas embun
+    -webkit-backdrop-filter: blur(15px) !important;
+    z-index: 999 !important; // Mencegah highlight table lompat ke atas header
+  }
+
+  // Hilangkan balok penutup TOC dan paksa Search Input tembus pandang
+  .toc-border-cover, 
+  search,
+  #search-input,
+  #toc-wrapper::before,
+  #toc-wrapper::after {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
 
   /* Home page */
   --post-list-text-color: dimgray;
@@ -144,21 +208,20 @@
   --btn-paginator-hover-color: var(--sidebar-bg);
 
   /* Posts */
-  --toc-highlight: #0550ae;
-  --toc-popup-border-color: lightgray;
-  --btn-share-color: gray;
-  --btn-share-hover-color: #0d6efd;
+  --toc-highlight: #e17055;
+  --toc-popup-border-color: #dfe6e9;
+  --btn-share-color: #636e72;
+  --btn-share-hover-color: #0984e3;
   --card-bg: white;
-  --card-hover-bg: #e2e2e2;
-  --card-shadow: rgb(104 104 104 / 5%) 0 2px 6px 0,
-    rgb(211 209 209 / 15%) 0 0 0 1px;
-  --footnote-target-bg: lightcyan;
-  --tb-odd-bg: #fbfcfd;
-  --tb-border-color: #eaeaea;
-  --dash-color: silver;
-  --kbd-wrap-color: #bdbdbd;
+  --card-hover-bg: white;
+  --card-shadow: rgba(225, 112, 85, 0.15) 0 4px 15px; 
+  --footnote-target-bg: #f8f9fa;
+  --tb-odd-bg: #fef9ef;
+  --tb-border-color: #dfe6e9;
+  --dash-color: #dfe6e9;
+  --kbd-wrap-color: #dfe6e9;
   --kbd-text-color: var(--text-color);
-  --kbd-bg-color: white;
+  --kbd-bg-color: #f8f9fa;
   --prompt-text-color: rgb(46 46 46 / 77%);
   --prompt-tip-bg: rgb(123 247 144 / 20%);
   --prompt-tip-icon-color: #03b303;
@@ -396,5 +459,114 @@
   .highlight .gs {
     color: #24292f;
     font-weight: bold;
+  }
+  @keyframes leafFall {
+    0% {
+      top: -10vh;                     // mulainya dari atas viewport (tersembunyi)
+      transform: rotate(0deg) scale(0.8);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;                     // opacity transisi tanpa henti
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      top: 110vh;                     // berakhir di bawah viewport (tersembunyi)
+      transform: rotate(720deg) scale(1);
+      opacity: 0;
+    }
+  }
+
+  // Container untuk semua dekorasi terbang
+  .flying-decorations {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;                 // potong daun saat di luar area
+
+    .falling-leaf {
+      position: absolute;
+      top: -10vh;              // <-- tambahkan ini, supaya start dari atas luar layar
+      font-size: 24px;
+      animation: leafFall linear infinite;
+      animation-fill-mode: backwards; // opsional, jaga-jaga jika ada delay
+      opacity: 0.7;
+      filter: drop-shadow(0 0 2px rgba(0,0,0,0.1));
+
+      &::before {
+        content: '🍃'; // atau🍃, 🌸, 🍂, 🍁
+      }
+    }
+  }
+
+  // Media query: matikan animasi jika user tidak ingin gerakan
+  @media (prefers-reduced-motion: reduce) {
+    .flying-decorations .falling-leaf {
+      animation: none !important;
+      display: none;
+    }
+  }
+    // ========== MOBILE: Kurangi gangguan visual ==========
+  @media (max-width: 849px) {
+    // Matahari (body::before) dibuat sangat transparan
+    body::before {
+      opacity: 0.08;
+    }
+
+    // Blob embun kiri (blob + sparkles) kurangi opacity
+    #main-wrapper::before {
+      opacity: 0.3;
+    }
+
+    // Blob kanan + sun rays
+    #main-wrapper::after {
+      opacity: 0.2;
+    }
+
+    // Daun jatuh: bisa dihilangkan total atau dikecilkan
+    .flying-decorations .falling-leaf {
+      // display: none;           // hilangkan daun di mobile
+      // Alternatif jika ingin tetap ada:
+      font-size: 8px;
+      opacity: 0.02;
+    }
+  }
+  // ========== Pengaturan Jarak Konten & Sidebar ==========
+  // Kurangi gutter antar kolom
+  #main-wrapper .row {
+    --bs-gutter-x: 0.75rem; // default 1.5rem, jadi setengahnya
+  }
+
+  // Perkecil padding horizontal container
+  #main-wrapper .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  // Sesuaikan padding main dan aside
+  #main-wrapper main {
+    padding-right: 0.25rem; // beri ruang kecil ke aside
+  }
+
+  #main-wrapper aside {
+    padding-left: 0.25rem;
+  }
+
+  // Opsional: ubah proporsi kolom jika ingin sidebar lebih kecil
+  @media (min-width: 1200px) { // khusus xl
+    #main-wrapper main {
+      flex: 0 0 auto;
+      width: 80%; // lebih lebar
+    }
+    #main-wrapper aside {
+      flex: 0 0 auto;
+      width: 20%; // sidebar lebih sempit
+    }
   }
 }

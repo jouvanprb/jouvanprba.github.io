@@ -32,7 +32,7 @@ Telkom University.`
   Tipe Data Integer berfungsi untuk menyimpan nilai bilangan bulat, baik positif maupun negatif.
 
   ```go
-  var usia int = 20
+var usia int = 20
   ```
   `Golang`{: .filepath} menyediakan beberapa variasi integer `int`,`int8`,`int16`,`int32`,`int64`,`uint`,`uint8`,`uint16`,`uint32`,`uint64`.
 
@@ -41,7 +41,7 @@ Telkom University.`
   Untuk bilangan desimal, kita bisa menggunakan `float32` atau `float64`.
 
   ```go
-  var tinggi float64 = 171.2
+var tinggi float64 = 171.2
   ```
 
 ##  Tipe Data Boolean
