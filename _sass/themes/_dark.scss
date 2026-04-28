@@ -1,10 +1,222 @@
+@function create-stars($n, $colors: ('#fff', '#fff8dc', '#add8e6', '#ffd700')) {
+  $x0: random(2000);
+  $y0: random(2000);
+  $c0: nth($colors, random(length($colors)));
+  $value: '#{$x0}px #{$y0}px #{$c0}, #{$x0}px #{$y0 + 2000}px #{$c0}';
+  @for $i from 2 through $n {
+    $x: random(2000);
+    $y: random(2000);
+    $color: nth($colors, random(length($colors)));
+    $value: '#{$value}, #{$x}px #{$y}px #{$color}, #{$x}px #{$y + 2000}px #{$color}';
+  }
+  @return unquote($value);
+}
+
+$stars-sm: create-stars(300);
+$stars-md: create-stars(100);
+
+@keyframes animStar {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-2000px); }
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0.4; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes floatMoon {
+  from { transform: translateY(0) translateX(0) rotate(-10deg); }
+  to   { transform: translateY(-30px) translateX(20px) rotate(0deg); }
+}
+
+@keyframes floatPlanet {
+  from { transform: translateY(0) translateX(0); }
+  to   { transform: translateY(30px) translateX(-20px); }
+}
+
+@keyframes rotateRing {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes moveNebula {
+  from { background-position: 0% 0%, 0% 0%, 0% 0%; }
+  to   { background-position: 100% 100%, 80% 120%, 120% 80%; }
+}
+
+// Shooting star animations
+@keyframes shoot1 {
+  0%   { transform: translateX(0) translateY(0) scale(1); opacity: 1; }
+  50%  { opacity: 1; }
+  100% { transform: translateX(-600px) translateY(600px) scale(0.3); opacity: 0; }
+}
+@keyframes shoot2 {
+  0%   { transform: translateX(0) translateY(0) scale(1); opacity: 0; }
+  40%  { opacity: 1; }
+  100% { transform: translateX(-800px) translateY(400px) scale(0.2); opacity: 0; }
+}
+@keyframes shoot3 {
+  0%   { transform: translateX(0) translateY(0) scale(1); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: translateX(-500px) translateY(700px) scale(0.4); opacity: 0; }
+}
+
 @mixin styles {
   color-scheme: dark;
 
+  // ---------- BASE: Nebula + Space ----------
+  // Terapkan background dasar ke html (induk) agar elemen z-index negatif di body tidak tenggelam.
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(55, 0, 100, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(0, 20, 60, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, #111520 0%, #040508 100%);
+  background-size: 200% 200%, 200% 200%, auto;
+  background-attachment: fixed;
+  animation: moveNebula 40s ease-in-out infinite alternate; // Lebih cepat
+
+  body {
+    background: transparent !important;
+
+    // Bulan sabit
+    &::before {
+      content: "";
+      position: fixed;
+      z-index: -2;
+      pointer-events: none;
+      top: 15%;
+      right: 15%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: inset -15px -15px 0 2px #d6d6d6,
+                  inset -18px -18px 0 4px rgba(255, 255, 255, 0.1),
+                  0 0 30px 0px rgba(255, 255, 255, 0.3);
+      filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+      animation: floatMoon 10s ease-in-out infinite alternate; // Lebih cepat
+    }
+
+    // Planet Gas Raksasa / Cyberpunk Planet
+    &::after {
+      content: "";
+      position: fixed;
+      z-index: -2;
+      pointer-events: none;
+      bottom: 10%;
+      left: 10%;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      // Rendering planet surface yang mulus dan modern
+      background: radial-gradient(circle at 30% 30%, 
+                    #9b59b6 0%, 
+                    #8e44ad 25%, 
+                    #2c3e50 60%, 
+                    #050510 100%);
+      // Shadow tebal untuk memisahkan sisi terang & gelap (3D effect) dan cahaya atmosfer
+      box-shadow: inset -30px -30px 40px rgba(0, 0, 0, 0.9),
+                  inset 10px 10px 30px rgba(155, 89, 182, 0.5),
+                  0 0 50px 15px rgba(142, 68, 173, 0.4);
+      filter: drop-shadow(0 0 15px rgba(155, 89, 182, 0.6));
+      animation: floatPlanet 20s ease-in-out infinite alternate;
+      opacity: 0.95;
+    }
+  }
+
+  // ---------- LAPISAN BINTANG ----------
+  #main-wrapper {
+    &::before,
+    &::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    // Bintang kecil (warna-warni)
+    &::before {
+      width: 1px;
+      height: 1px;
+      background: transparent;
+      box-shadow: $stars-sm;
+      animation: animStar 60s linear infinite,
+                 twinkle 4s ease-in-out infinite alternate;
+    }
+
+    // Bintang besar
+    &::after {
+      width: 2px;
+      height: 2px;
+      background: transparent;
+      box-shadow: $stars-md;
+      animation: animStar 100s linear infinite,
+                 twinkle 6s ease-in-out infinite alternate;
+      animation-delay: -10s;
+    }
+  }
+
+  // ---------- BINTANG JATUH (trik background bergerak) ----------
+  // Kita manfaatkan elemen kosong .shooting-stars yang dikaitkan di HTML
+  .shooting-stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 6px 2px white;
+      animation-duration: 2.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    &::before {
+      top: 8%;
+      left: 70%;
+      animation-name: shoot1;
+    }
+
+    &::after {
+      top: 15%;
+      left: 85%;
+      animation-name: shoot2;
+      animation-delay: 1.2s;
+    }
+
+    // Tambahan bintang jatuh ketiga menggunakan background-image bergerak
+    background-image: linear-gradient(
+      to bottom right,
+      transparent calc(50% - 2px),
+      white calc(50% - 2px),
+      white calc(50% + 2px),
+      transparent calc(50% + 2px)
+    );
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: 90% 5%;
+    animation: shoot3 3s infinite linear 2.5s both;
+  }
+
+  // ---------- ROKET MELUNCUR ----------
+
   /* Framework color */
-  --main-bg: rgb(27 27 30);
-  --mask-bg: rgb(68 69 70);
-  --main-border-color: rgb(44 45 45);
+  --main-bg: transparent;
+  --mask-bg: rgba(68, 69, 70, 0.6);
+  --main-border-color: rgba(44, 45, 45, 0.4);
 
   /* Common color */
   --text-color: rgb(175 176 177);
@@ -16,11 +228,11 @@
   --blockquote-text-color: #868686;
   --link-color: rgb(138 180 248);
   --link-underline-color: rgb(82 108 150);
-  --button-bg: #1e1e1e;
-  --btn-border-color: #2e2f31;
+  --button-bg: rgba(30, 30, 30, 0.6);
+  --btn-border-color: rgba(46, 47, 49, 0.5);
   --btn-backtotop-color: var(--text-color);
-  --btn-backtotop-border-color: #212122;
-  --card-header-bg: #292929;
+  --btn-backtotop-border-color: rgba(33, 33, 34, 0.5);
+  --card-header-bg: rgba(41, 41, 41, 0.4);
   --checkbox-color: rgb(118 120 121);
   --checkbox-checked-color: var(--link-color);
   --img-bg: radial-gradient(circle, rgb(22 22 24) 0%, rgb(32 32 32) 100%);
@@ -34,21 +246,21 @@
   /* Sidebar */
   --site-title-color: #717070;
   --site-subtitle-color: #868686;
-  --sidebar-bg: #1e1e1e;
-  --sidebar-border-color: #292929;
+  --sidebar-bg: transparent;
+  --sidebar-border-color: transparent;
   --sidebar-muted-color: #868686;
   --sidebar-active-color: rgb(255 255 255 / 95%);
-  --sidebar-hover-bg: #262626;
-  --sidebar-btn-bg: #232328;
+  --sidebar-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-btn-bg: transparent;
   --sidebar-btn-color: #787878;
   --avatar-border-color: rgb(206 206 206 / 90%);
 
   /* Topbar */
-  --topbar-bg: rgb(27 27 30 / 64%);
+  --topbar-bg: transparent;
   --topbar-text-color: var(--text-color);
-  --search-border-color: rgb(55 55 55);
+  --search-border-color: transparent;
   --search-icon-color: rgb(100 102 105);
-  --input-focus-border-color: rgb(112 114 115);
+  --input-focus-border-color: rgba(255, 255, 255, 0.2);
 
   /* Home page */
   --post-list-text-color: rgb(175 176 177);
@@ -59,14 +271,14 @@
   --toc-highlight: rgb(116 178 243);
   --toc-popup-border-color: #373737;
   --tag-hover: rgb(43 56 62);
-  --tb-odd-bg: #252526; /* odd rows of the posts' table */
-  --tb-even-bg: rgb(31 31 34); /* even rows of the posts' table */
+  --tb-odd-bg: rgba(37, 37, 38, 0.4); /* odd rows of the posts' table */
+  --tb-even-bg: rgba(31, 31, 34, 0.4); /* even rows of the posts' table */
   --tb-border-color: var(--tb-odd-bg);
   --footnote-target-bg: rgb(63 81 181);
   --btn-share-color: #6c757d;
   --btn-share-hover-color: #bfc1ca;
-  --card-bg: #1e1e1e;
-  --card-hover-bg: #464d51;
+  --card-bg: rgba(30, 30, 35, 0.4);
+  --card-hover-bg: rgba(70, 77, 81, 0.5);
   --card-shadow: rgb(21 21 21 / 72%) 0 6px 18px 0,
     rgb(137 135 135 / 24%) 0 0 0 1px;
   --kbd-wrap-color: #6a6a6a;
@@ -99,11 +311,11 @@
   --timeline-year-dot-color: var(--timeline-color);
 
   /* Code highlight colors */
-  --language-border-color: #2d2d2d;
-  --highlight-bg-color: #151515;
+  --language-border-color: rgba(45, 45, 45, 0.4);
+  --highlight-bg-color: rgba(21, 21, 21, 0.5);
   --highlighter-rouge-color: #c9def1;
   --highlight-lineno-color: #808080;
-  --inline-code-bg: rgb(255 255 255 / 5%);
+  --inline-code-bg: rgba(255, 255, 255, 0.08);
   --code-color: #b0b0b0;
   --code-header-text-color: #6a6a6a;
   --code-header-muted-color: #353535;
@@ -141,11 +353,11 @@
   #archives li:nth-child(odd) {
     background-image: linear-gradient(
       to left,
-      rgb(26 26 30),
-      rgb(39 39 45),
-      rgb(39 39 45),
-      rgb(39 39 45),
-      rgb(26 26 30)
+      rgba(26, 26, 30, 0),
+      rgba(39, 39, 45, 0.4),
+      rgba(39, 39, 45, 0.5),
+      rgba(39, 39, 45, 0.4),
+      rgba(26, 26, 30, 0)
     );
   }
 
@@ -171,7 +383,7 @@
   .highlight,
   .highlight .w {
     color: #d0d0d0;
-    background-color: #151515;
+    background-color: transparent;
   }
 
   .highlight .err {
@@ -218,7 +430,7 @@
 
   .highlight .gh {
     color: #6a9fb5;
-    background-color: #151515;
+    background-color: transparent;
     font-weight: bold;
   }
 

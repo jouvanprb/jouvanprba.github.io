@@ -1,4 +1,95 @@
+// ====================================================
+// FUNCTIONS & KEYFRAMES (LIGHT MODE)
+// ====================================================
+
+@keyframes moonRetreat {
+  0%   { transform: translateX(0) translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateX(150px) translateY(150px) scale(0.1); opacity: 0; }
+}
+
+@keyframes sunArrive {
+  0%   { transform: translateY(300px) scale(0.1) rotate(-45deg); opacity: 0; filter: drop-shadow(0 0 10px rgba(255, 235, 59, 0)); }
+  40%  { transform: translateY(-20px) scale(1.1) rotate(10deg); opacity: 1; filter: drop-shadow(0 0 80px rgba(255, 235, 59, 1)); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 60px rgba(255, 235, 59, 0.6)); }
+}
+
+@keyframes floatSun {
+  from { transform: translateY(0) scale(1) rotate(0deg); }
+  to   { transform: translateY(-20px) scale(1.05) rotate(15deg); }
+}
+
 @mixin styles {
+  color-scheme: light;
+
+  // Background Langit Siang (diletakkan di html parent agar stacking context aman)
+  background: var(--main-bg);
+
+  body {
+    background: transparent !important;
+
+    // Retreating Moon (Muncul sedetik lalu hilang untuk efek transisi dari Dark ke Light)
+    &::after {
+      content: "";
+      position: fixed;
+      z-index: -2;
+      pointer-events: none;
+      top: 15%;
+      right: 15%;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: inset -15px -15px 0 2px #d6d6d6,
+                  inset -18px -18px 0 4px rgba(255, 255, 255, 0.1),
+                  0 0 30px 0px rgba(255, 255, 255, 0.3);
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.1));
+      animation: moonRetreat 2.5s cubic-bezier(0.5, 0.05, 1, 0.5) forwards;
+    }
+
+    // Arriving Sun & Floating
+    &::before {
+      content: "";
+      position: fixed;
+      z-index: -2;
+      pointer-events: none;
+      top: 10%;
+      right: 15%;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fffdf2 0%, #ffeb3b 40%, #fbc02d 100%);
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.8),
+                  0 0 60px 20px rgba(255, 235, 59, 0.6);
+      animation: 
+        sunArrive 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
+        floatSun 12s ease-in-out 2.5s infinite alternate;
+    }
+  }
+
+  // ---------- AWAN MENGAPUNG ----------
+  #main-wrapper {
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.6;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.9) 5%, transparent 15%),
+        radial-gradient(circle at 15% 25%, rgba(255,255,255,0.8) 8%, transparent 20%),
+        radial-gradient(circle at 40% 10%, rgba(255,255,255,0.8) 6%, transparent 18%),
+        radial-gradient(circle at 45% 15%, rgba(255,255,255,0.9) 10%, transparent 22%),
+        radial-gradient(circle at 75% 30%, rgba(255,255,255,0.7) 7%, transparent 15%),
+        radial-gradient(circle at 80% 35%, rgba(255,255,255,0.8) 9%, transparent 20%);
+      background-size: 150vw 100vh;
+      animation: panClouds 40s linear infinite;
+    }
+  }
+
   /* Framework color */
   --main-bg: white;
   --mask-bg: #c1c3c5;
