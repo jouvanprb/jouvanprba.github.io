@@ -450,7 +450,7 @@ $dust-md: create-dust(50);
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .flying-decorations::before, .flying-decorations::after {
+    .flying-decorations::before, .flying-decorations::after { 
       animation: none !important;
       display: none;
     }
