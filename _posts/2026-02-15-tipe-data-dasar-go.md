@@ -52,7 +52,7 @@ Tipe Data Boolean hanya memiki 2 nilai yaitu: `True`{: .filepath} atau `False`{:
 var mahasiswa bool = true
 ```
 pada pernyataan `if` boolean sangat sering digunakan.
-
+![alt text](image.png)
 ##  Tipe Data Default
 
 Tipe data default merupakan tipe data yang dideklarasikan tanpa tipe atau secara eksplisit. Tipe data akan ditentukan berdasarkan nilai.

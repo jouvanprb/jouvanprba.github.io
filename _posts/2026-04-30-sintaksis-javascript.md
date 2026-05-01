@@ -40,6 +40,7 @@ Bisa disimpulkan bahwa **statement adalah instruksi yang akan dieksekusi oleh ko
 Selain statement, ada istilah lain yang penting untuk diketahui, yaitu expression. Ini merupakan bagian dari sebuah statement yang menghasilkan nilai. Setiap statement biasanya mengandung setidaknya satu expression. Contoh, expression dalam kode di atas adalah nilai age 10, teks “Dicoding”, dan teks “Aku Dicoding, umurku 10 tahun.”.
 
 Berikut adalah ilustrasi yang bisa Anda lihat untuk memudahkan pemahaman mengenai bagian expression pada statement.
+image: 
 
 ![Desktop View](/posts/20260429/statement-expression.jpeg){: .light .w-75 .shadow .rounded-10 w='1212' h='668' }
 ![Desktop View](/posts/20260429/statement-expression.jpeg){: .dark .w-75 .shadow .rounded-10 w='1212' h='668' }
