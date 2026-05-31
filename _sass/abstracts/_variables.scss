@@ -12,8 +12,8 @@ $search-max-width: 200px !default;
 $footer-height: 5rem !default;
 $footer-height-large: 6rem !default; /* screen width: < 850px */
 $main-content-max-width: 1350px !default;
-$radius-sm: 6px !default;
-$radius-lg: 10px !default;
+$radius-sm: 10px !default;
+$radius-lg: 22px !default;
 $back2top-size: 2.75rem !default;
 
 /* syntax highlight */
@@ -26,5 +26,5 @@ $code-icon-width: 1.75rem !default;
 
 /* fonts */
 
-$font-family-base: 'Source Sans Pro', 'Microsoft Yahei', sans-serif !default;
-$font-family-heading: Lato, 'Microsoft Yahei', sans-serif !default;
+$font-family-base: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif !default;
+$font-family-heading: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;

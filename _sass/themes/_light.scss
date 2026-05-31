@@ -1,353 +1,172 @@
-@function create-dust($n, $colors: ('#fff9c4', '#ffeaa7', '#e3f2fd', '#81ecec', '#ffffff')) {
-  $x0: random(2000);
-  $y0: random(2000);
-  $c0: nth($colors, random(length($colors)));
-  $value: '#{$x0}px #{$y0}px 3px 1px #{$c0}, #{$x0}px #{$y0 + 2000}px 3px 1px #{$c0}';
-  @for $i from 2 through $n {
-    $x: random(2000);
-    $y: random(2000);
-    $color: nth($colors, random(length($colors)));
-    $value: '#{$value}, #{$x}px #{$y}px 4px 1px #{$color}, #{$x}px #{$y + 2000}px 2px 1px #{$color}';
-  }
-  @return unquote($value);
-}
-
-$dust-sm: create-dust(150);
-$dust-md: create-dust(50);
-
-@keyframes sunArrive {
-  0%   { transform: translateY(300px) scale(0.1) rotate(-45deg); opacity: 0; filter: drop-shadow(0 0 0 transparent); }
-  40%  { transform: translateY(-20px) scale(1.05) rotate(10deg); opacity: 1; filter: drop-shadow(0 0 40px rgba(255, 224, 130, 0.4)); }
-  100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; filter: drop-shadow(0 0 30px rgba(255, 224, 130, 0.3)); }
-}
-
-@keyframes floatSun {
-  from { transform: translateY(0) scale(1) rotate(0deg); }
-  to   { transform: translateY(-10px) scale(1.02) rotate(5deg); }
-}
-
-@keyframes floatDust {
-  0% { transform: translateY(0) translateX(0); }
-  50% { transform: translateY(-1000px) translateX(30px); }
-  100% { transform: translateY(-2000px) translateX(-20px); }
-}
-
-@keyframes pulseDust {
-  0%   { opacity: 0.3; }
-  50%  { opacity: 0.9; }
-  100% { opacity: 0.3; }
-}
-
-@keyframes godRaysSweep {
-  from { transform: rotate(-5deg) scale(1.2); opacity: 0.5; }
-  to   { transform: rotate(5deg) scale(1.3); opacity: 0.8; }
-}
-
-@keyframes driftClouds {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-20vw); }
-}
-
-// Animasi pergerakan lembut untuk gradien latar utama
-@keyframes moveMist {
-  from { background-position: 0% 0%, 0% 0%, 0% 0%; }
-  to   { background-position: 100% 80%, 80% 100%, 100% 60%; }
-}
-
 @mixin styles {
   color-scheme: light;
 
-  // ---------- BASE: Langit Pagi Biru Kekuningan ----------
-  background: 
-    radial-gradient(ellipse at 15% 20%, rgba(255, 240, 150, 0.35) 0%, transparent 50%),
-    radial-gradient(ellipse at 85% 80%, rgba(180, 230, 250, 0.35) 0%, transparent 50%),
-    linear-gradient(180deg, #ebf5fa 0%, #ffffff 50%, #fffdf4 100%);
-  background-size: 200% 200%, 200% 200%, auto;
-  background-attachment: fixed;
-  animation: moveMist 40s ease-in-out infinite alternate;
-
-  body {
-    background: transparent !important;
-
-    // Matahari (SETARA dengan Planet di Dark Mode)
-    &::before {
-      content: "";
-      position: fixed;
-      z-index: -2;
-      pointer-events: none;
-      top: 90px;
-      right: -80px;
-      width: 330px;
-      height: 330px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #ffffff 0%, #fffdf4 30%, #fff3ce 80%, transparent 100%);
-      box-shadow: inset 0 0 40px rgba(255, 255, 255, 1),
-                  0 0 100px 30px rgba(255, 224, 130, 0.4);
-      filter: blur(2px);
-      animation: 
-        sunArrive 3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-        floatSun 15s ease-in-out 3s infinite alternate;
-    }
-
-    // God Rays (Sinar Bias Sinematik Pagi) PADA OPACITY KUAT (TERLIHAT)
-    &::after {
-      content: "";
-      position: fixed;
-      top: -50%;
-      right: -50%;
-      width: 200vw;
-      height: 200vh;
-      z-index: -3;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        -35deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 250, 210, 0.4) 4%,
-        rgba(255, 255, 255, 0) 8%,
-        rgba(255, 240, 150, 0.5) 12%,
-        rgba(255, 255, 255, 0) 16%
-      );
-      transform-origin: top right;
-      animation: godRaysSweep 25s infinite alternate ease-in-out;
-    }
-
-    // Khusus layar Mobile: Geser matahari ke pucuk kanan atas agar tidak mengganggu bacaan
-    @media (max-width: 849px) {
-      &::after { opacity: 0.10; } // God rays
-      &::before { 
-        top: -120px !important;
-        right: -160px !important;
-        opacity: 0.6;
-      }
-    }
-  }
-
-  // ---------- DANCING DUST MOTES (Partikel Debu Terbang) ----------
-  #main-wrapper {
-    position: relative;
-    z-index: 1;
-
-    &::before, &::after {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -2;
-      pointer-events: none;
-    }
-
-    // Dust Layer 1
-    &::before {
-      width: 1px;
-      height: 1px;
-      background: transparent;
-      box-shadow: $dust-sm;
-      animation: floatDust 80s linear infinite,
-                 pulseDust 6s ease-in-out infinite alternate;
-    }
-
-    // Dust Layer 2
-    &::after {
-      width: 2px;
-      height: 2px;
-      background: transparent;
-      box-shadow: $dust-md;
-      animation: floatDust 120s linear infinite,
-                 pulseDust 8s ease-in-out infinite alternate;
-      animation-delay: -30s;
-    }
-  }
-
-  // ---------- VARIABEL WARNA (TEMA TERANG) ----------
   /* Framework color */
-  --main-bg: transparent; // Diselaraskan dengan dark mode
-  --mask-bg: rgba(223, 230, 233, 0.6);
-  --main-border-color: rgba(223, 230, 233, 0.4);
+  --main-bg: #f5f5f7; // Apple Signature Canvas
+  --mask-bg: rgba(255, 255, 255, 0.6);
+  --main-border-color: rgba(0, 0, 0, 0.05); // Ultra fine borders
 
   /* Common color */
-  --text-color: #2d3436;
-  --text-muted-color: #636e72;
-  --text-muted-highlight-color: inherit;
-  --heading-color: #2d3436;
-  --label-color: #2d3436;
-  --blockquote-border-color: rgba(223, 230, 233, 0.8);
-  --blockquote-text-color: #636e72;
-  --link-color: #0984e3;
-  --link-underline-color: rgba(9, 132, 227, 0.6);
-  --button-bg: rgba(255, 255, 255, 0.6);
-  --btn-border-color: rgba(223, 230, 233, 0.8);
-  --btn-backtotop-color: #686868;
-  --btn-backtotop-border-color: rgba(241, 241, 241, 0.8);
-  --card-header-bg: rgba(248, 249, 250, 0.5);
-  --checkbox-color: #c5c5c5;
-  --checkbox-checked-color: #07a8f7;
-  --img-bg: radial-gradient(circle, rgb(255 255 255) 0%, rgb(239 239 239) 100%);
+  --text-color: #1d1d1f; // Apple Primary Text
+  --text-muted-color: #86868b; // Apple Secondary Text
+  --text-muted-highlight-color: #515154;
+  --heading-color: #1d1d1f;
+  --label-color: #515154;
+  --blockquote-border-color: #d2d2d7;
+  --blockquote-text-color: #515154;
+  --link-color: #0066cc; // Apple Blue
+  --link-underline-color: rgba(0, 102, 204, 0.2);
+  --button-bg: #ffffff;
+  --btn-border-color: rgba(0, 0, 0, 0.08);
+  --btn-backtotop-color: #1d1d1f;
+  --btn-backtotop-border-color: rgba(0, 0, 0, 0.08);
+  --card-header-bg: transparent; // Clean flat headers
+  --checkbox-color: #d2d2d7;
+  --checkbox-checked-color: #0066cc;
+  --img-bg: transparent;
   --shimmer-bg: linear-gradient(
     90deg,
-    rgb(250 250 250 / 0%) 0%,
-    rgb(232 230 230 / 40%) 50%,
-    rgb(250 250 250 / 0%) 100%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(0, 0, 0, 0.02) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
 
-  /* Sidebar */
-  --site-title-color: #1a1a1a;
-  --site-subtitle-color: #3a3a3a;
-  --sidebar-bg: transparent;
-  --sidebar-border-color: transparent;
-  --sidebar-muted-color: #3a3a3a;
-  --sidebar-active-color: #000000;
-  --sidebar-hover-bg: rgba(255, 255, 255, 0.4);
+  /* Sidebar (Seamless with Canvas) */
+  --site-title-color: #1d1d1f;
+  --site-subtitle-color: #86868b;
+  --sidebar-bg: #f5f5f7; // Blends 100% with the main background
+  --sidebar-border-color: transparent; // No dividing line!
+  --sidebar-muted-color: #86868b;
+  --sidebar-active-color: #1d1d1f;
+  --sidebar-hover-bg: rgba(0, 0, 0, 0.04);
   --sidebar-btn-bg: transparent;
-  --sidebar-btn-color: #1a1a1a;
-  --avatar-border-color: rgba(0, 0, 0, 0.1);
+  --sidebar-btn-color: #1d1d1f;
+  --avatar-border-color: rgba(0, 0, 0, 0.05);
 
-  /* Topbar */
-  --topbar-bg: transparent;
-  --topbar-text-color: #2d3436;
-  --search-border-color: transparent;
-  --search-icon-color: #636e72;
-  --input-focus-border-color: rgba(9, 132, 227, 0.5);
-
-  // Glassmorphism untuk Topbar & TOC (SAMA DENGAN DARK)
-  #topbar-wrapper, #toc-bar {
-    background: transparent !important;
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-    z-index: 999 !important;
-  }
-
-  .toc-border-cover, 
-  search,
-  #search-input,
-  #toc-wrapper::before,
-  #toc-wrapper::after {
-    background: transparent !important;
-    box-shadow: none !important;
-  }
+  /* Topbar (Frosted Glass) */
+  --topbar-bg: rgba(245, 245, 247, 0.85); // Translucent canvas
+  --topbar-text-color: #1d1d1f;
+  --search-border-color: rgba(0, 0, 0, 0.05);
+  --search-icon-color: #86868b;
+  --input-focus-border-color: #0066cc;
 
   /* Home page */
-  --post-list-text-color: dimgray;
-  --btn-patinator-text-color: #555555;
-  --btn-paginator-hover-color: rgba(223, 230, 233, 0.5);
+  --post-list-text-color: #515154;
+  --btn-patinator-text-color: #1d1d1f;
+  --btn-paginator-hover-color: rgba(0, 0, 0, 0.04);
 
-  /* Posts */
-  --toc-highlight: #e17055;
-  --toc-popup-border-color: rgba(223, 230, 233, 0.8);
-  --tag-hover: rgb(222 226 230);
-  --tb-odd-bg: rgba(254, 249, 239, 0.4);
-  --tb-even-bg: rgba(255, 255, 255, 0.4);
-  --tb-border-color: var(--tb-odd-bg);
-  --footnote-target-bg: #f8f9fa;
-  --btn-share-color: #636e72;
-  --btn-share-hover-color: #0984e3;
-  --card-bg: rgba(255, 255, 255, 0.65);
-  --card-hover-bg: rgba(255, 255, 255, 0.9);
-  --card-shadow: rgba(225, 112, 85, 0.15) 0 4px 15px; 
-  --kbd-wrap-color: rgba(223, 230, 233, 0.8);
-  --kbd-text-color: var(--text-color);
-  --kbd-bg-color: rgba(248, 249, 250, 0.8);
-  --prompt-text-color: rgb(46 46 46 / 77%);
-  --prompt-tip-bg: rgb(123 247 144 / 20%);
-  --prompt-tip-icon-color: #03b303;
-  --prompt-info-bg: rgba(225, 245, 254, 0.8);
-  --prompt-info-icon-color: #0070cb;
-  --prompt-warning-bg: rgba(255, 243, 205, 0.8);
-  --prompt-warning-icon-color: #ef9c03;
-  --prompt-danger-bg: rgb(248 215 218 / 56%);
-  --prompt-danger-icon-color: #df3c30;
+  /* Posts & Cards (Apple Clean White) */
+  --toc-highlight: #0066cc;
+  --toc-popup-border-color: rgba(0, 0, 0, 0.05);
+  --tag-hover: rgba(0, 0, 0, 0.03);
+  --tb-odd-bg: rgba(0, 0, 0, 0.02);
+  --tb-even-bg: transparent;
+  --tb-border-color: rgba(0, 0, 0, 0.04);
+  --footnote-target-bg: rgba(0, 102, 204, 0.08);
+  --btn-share-color: #86868b;
+  --btn-share-hover-color: #0066cc;
+  --card-bg: #ffffff; // Pure white cards
+  --card-hover-bg: #ffffff;
+  --card-shadow: 0 4px 14px rgba(0, 0, 0, 0.03); // Ultra soft ambient shadow
+  --kbd-wrap-color: rgba(0, 0, 0, 0.06);
+  --kbd-text-color: #1d1d1f;
+  --kbd-bg-color: #f5f5f7;
+  --prompt-text-color: #1d1d1f;
+  --prompt-tip-bg: rgba(52, 199, 89, 0.1);
+  --prompt-tip-icon-color: #34c759;
+  --prompt-info-bg: rgba(0, 122, 255, 0.1);
+  --prompt-info-icon-color: #007aff;
+  --prompt-warning-bg: rgba(255, 149, 0, 0.1);
+  --prompt-warning-icon-color: #ff9500;
+  --prompt-danger-bg: rgba(255, 59, 48, 0.1);
+  --prompt-danger-icon-color: #ff3b30;
 
   /* Tags */
-  --tag-border: rgba(222, 226, 230, 0.5);
-  --tag-shadow: var(--btn-border-color);
-  --dash-color: #dfe6e9;
-  --search-tag-bg: rgba(248, 249, 250, 0.8);
+  --tag-border: rgba(0, 0, 0, 0.1); // Visible border, matching dark mode structure
+  --tag-shadow: rgba(0, 0, 0, 0.04);
+  --dash-color: rgba(0, 0, 0, 0.1);
+  --search-tag-bg: rgba(0, 0, 0, 0.03);
 
-  /* Categories */
-  --categories-border: rgb(0 0 0 / 12.5%);
-  --categories-hover-bg: var(--btn-border-color);
-  --categories-icon-hover-color: darkslategray;
+  /* Categories & Archives (Flat Clean) */
+  --categories-border: rgba(0, 0, 0, 0.05);
+  --categories-hover-bg: rgba(0, 0, 0, 0.02);
+  --categories-icon-hover-color: #1d1d1f;
 
-  /* Archive */
-  --timeline-node-bg: #c2c6cc;
-  --timeline-color: rgb(0 0 0 / 7.5%);
+  --timeline-node-bg: #d2d2d7;
+  --timeline-color: rgba(0, 0, 0, 0.05);
   --timeline-year-dot-color: #ffffff;
 
-  /* Code highlight colors */
-  --language-border-color: rgba(236, 236, 236, 0.5);
-  --highlight-bg-color: rgba(246, 248, 250, 0.8);
-  --highlighter-rouge-color: #3f596f;
-  --highlight-lineno-color: #9e9e9e;
-  --inline-code-bg: rgb(25 25 28 / 5%);
-  --code-color: #3a3a3a;
-  --code-header-text-color: #a3a3a3;
-  --code-header-muted-color: #e5e5e5;
-  --code-header-icon-color: #c9c8c8;
-  --clipboard-checked-color: #43c743;
-  --filepath-text-color: #6a6a6a;
-
-  [class^='prompt-'] {
-    --link-underline-color: rgb(219 216 216);
-  }
+  /* Code highlight colors (Mac Terminal Canvas look) */
+  --language-border-color: rgba(0, 0, 0, 0.06);
+  --highlight-bg-color: #ffffff;
+  --highlighter-rouge-color: #1d1d1f;
+  --highlight-lineno-color: #86868b;
+  --inline-code-bg: rgba(0, 0, 0, 0.04);
+  --code-color: #1d1d1f;
+  --code-header-text-color: #86868b;
+  --code-header-muted-color: rgba(0, 0, 0, 0.02);
+  --code-header-icon-color: #86868b;
+  --clipboard-checked-color: #34c759;
+  --filepath-text-color: #86868b;
 
   .dark { display: none; }
 
-  /* Categories (Diselaraskan dengan dark mode) */
-  .categories.card,
-  .list-group-item {
-    background-color: var(--card-bg);
+  // -------------------------------------------------------------------
+  // CLEAN NATIVE GLASSMORPHISM (Tanpa merusak layout Chirpy)
+  // -------------------------------------------------------------------
+
+  // Base background enforcing
+  body {
+    background: var(--main-bg) !important;
   }
 
-  .categories {
-    .card-header {
-      background-color: var(--card-header-bg);
+  // Apple frosted glass for Topbar
+  #topbar-wrapper, #toc-bar {
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+    background-color: var(--topbar-bg) !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+    box-shadow: none !important;
+  }
+
+  // Smooth hover effect for cards
+  .card {
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05) !important;
     }
-
-    .list-group-item {
-      border-left: none;
-      border-right: none;
-      padding-left: 2rem;
-      border-color: var(--categories-border);
-
-      &:last-child {
-        border-bottom-color: var(--card-bg);
-      }
-    }
   }
 
-  #archives li:nth-child(odd) {
-    background-image: linear-gradient(
-      to left,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.4),
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.4),
-      rgba(255, 255, 255, 0)
-    );
+  // Seamless sidebar integration
+  #sidebar {
+    background: var(--sidebar-bg) !important;
   }
 
-  // ---------- SINTAKS HIGHLIGHTING (TEMA GITHUB) ----------
+  // ---------- SYNTAX HIGHLIGHTING (CLEAN GITHUB LIGHT) ----------
   .highlight table td { padding: 5px; }
   .highlight table pre { margin: 0; }
   .highlight,
-  .highlight .w { color: #24292f; background-color: #f6f8fa; }
+  .highlight .w { color: #1d1d1f; background-color: #ffffff; }
   .highlight .k,
   .highlight .kd,
   .highlight .kn,
   .highlight .kp,
   .highlight .kr,
   .highlight .kt,
-  .highlight .kv { color: #cf222e; }
-  .highlight .gr { color: #f6f8fa; }
-  .highlight .gd { color: #82071e; background-color: #ffebe9; }
-  .highlight .nb { color: #953800; }
-  .highlight .nc { color: #953800; }
-  .highlight .no { color: #953800; }
-  .highlight .nn { color: #953800; }
-  .highlight .sr { color: #116329; }
-  .highlight .na { color: #116329; }
-  .highlight .nt { color: #116329; }
-  .highlight .gi { color: #116329; background-color: #dafbe1; }
-  .highlight .kc { color: #0550ae; }
+  .highlight .kv { color: #ff3b30; } // Apple red
+  .highlight .gr { color: #f5f5f7; }
+  .highlight .gd { color: #ff3b30; background-color: rgba(255, 59, 48, 0.1); }
+  .highlight .nb { color: #ff9500; } // Apple orange
+  .highlight .nc { color: #ff9500; }
+  .highlight .no { color: #ff9500; }
+  .highlight .nn { color: #ff9500; }
+  .highlight .sr { color: #34c759; } // Apple green
+  .highlight .na { color: #34c759; }
+  .highlight .nt { color: #34c759; }
+  .highlight .gi { color: #34c759; background-color: rgba(52, 199, 89, 0.1); }
+  .highlight .kc { color: #007aff; } // Apple blue
   .highlight .l,
   .highlight .ld,
   .highlight .m,
@@ -357,21 +176,21 @@ $dust-md: create-dust(50);
   .highlight .mi,
   .highlight .il,
   .highlight .mo,
-  .highlight .mx { color: #0550ae; }
-  .highlight .sb { color: #0550ae; }
-  .highlight .bp { color: #0550ae; }
-  .highlight .ne { color: #0550ae; }
-  .highlight .nl { color: #0550ae; }
-  .highlight .py { color: #0550ae; }
+  .highlight .mx { color: #007aff; }
+  .highlight .sb { color: #007aff; }
+  .highlight .bp { color: #007aff; }
+  .highlight .ne { color: #007aff; }
+  .highlight .nl { color: #007aff; }
+  .highlight .py { color: #007aff; }
   .highlight .nv,
   .highlight .vc,
   .highlight .vg,
   .highlight .vi,
-  .highlight .vm { color: #0550ae; }
+  .highlight .vm { color: #007aff; }
   .highlight .o,
-  .highlight .ow { color: #0550ae; }
-  .highlight .gh { color: #0550ae; font-weight: bold; }
-  .highlight .gu { color: #0550ae; font-weight: bold; }
+  .highlight .ow { color: #007aff; }
+  .highlight .gh { color: #007aff; font-weight: bold; }
+  .highlight .gu { color: #007aff; font-weight: bold; }
   .highlight .s,
   .highlight .sa,
   .highlight .sc,
@@ -382,11 +201,11 @@ $dust-md: create-dust(50);
   .highlight .sh,
   .highlight .sx,
   .highlight .s1,
-  .highlight .ss { color: #0a3069; }
-  .highlight .nd { color: #8250df; }
+  .highlight .ss { color: #0066cc; } // Apple darker blue for strings
+  .highlight .nd { color: #af52de; } // Apple purple
   .highlight .nf,
-  .highlight .fm { color: #8250df; }
-  .highlight .err { color: #f6f8fa; background-color: #82071e; }
+  .highlight .fm { color: #af52de; }
+  .highlight .err { color: #ffffff; background-color: #ff3b30; }
   .highlight .c,
   .highlight .ch,
   .highlight .cd,
@@ -394,106 +213,74 @@ $dust-md: create-dust(50);
   .highlight .cp,
   .highlight .cpf,
   .highlight .c1,
-  .highlight .cs { color: #68717a; }
-  .highlight .gl { color: #68717a; }
-  .highlight .gt { color: #68717a; }
-  .highlight .ni { color: #24292f; }
-  .highlight .si { color: #24292f; }
-  .highlight .ge { color: #24292f; font-style: italic; }
-  .highlight .gs { color: #24292f; font-weight: bold; }
+  .highlight .cs { color: #86868b; } // Secondary gray for comments
+  .highlight .gl { color: #86868b; }
+  .highlight .gt { color: #86868b; }
+  .highlight .ni { color: #1d1d1f; }
+  .highlight .si { color: #1d1d1f; }
+  .highlight .ge { color: #1d1d1f; font-style: italic; }
+  .highlight .gs { color: #1d1d1f; font-weight: bold; }
 
 
 
-  // ---------- PARALLAX CLOUDS (Awan Fajar Terang Biru ke Kuning) ----------
-  .flying-decorations {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: -3; // Di belakang matahari dan debu
-    overflow: hidden;
-
-    // Layer 1 - Awan Belakang (Lambat) - Nuansa soft blue ke bisque
-    &::before {
-      content: "";
-      position: absolute;
-      bottom: -20vh;
-      left: 0;
-      width: 200vw;
-      height: 70vh;
-      background: 
-        radial-gradient(ellipse at 20% 100%, rgba(227, 242, 253, 0.8) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 100%, rgba(255, 249, 196, 0.8) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 120%, rgba(235, 245, 255, 0.9) 0%, transparent 70%);
-      filter: blur(20px);
-      animation: driftClouds 80s linear infinite alternate;
-      opacity: 0.9;
-    }
-
-    // Layer 2 - Awan Depan (Cepat) - Mentari pagi lemon & cerah langit
-    &::after {
-      content: "";
-      position: absolute;
-      bottom: -15vh;
-      left: -50vw;
-      width: 300vw;
-      height: 50vh;
-      background: 
-        radial-gradient(ellipse at 30% 100%, rgba(255, 253, 230, 0.8) 0%, transparent 50%),
-        radial-gradient(ellipse at 70% 100%, rgba(210, 235, 250, 0.7) 0%, transparent 50%);
-      filter: blur(15px);
-      animation: driftClouds 50s linear infinite alternate-reverse;
-      opacity: 1;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .flying-decorations::before, .flying-decorations::after { 
-      animation: none !important;
-      display: none;
-    }
-  }
-
-  // ========== TAMPILAN SELULER (SEPERTI DARK MODE) ==========
-  @media (max-width: 849px) {
-    .flying-decorations::before { opacity: 0.4; }
-    .flying-decorations::after { opacity: 0.5; }
-    #main-wrapper::before, #main-wrapper::after { opacity: 0.3; }
-  }
-
-  // ========== PENGATURAN JARAK KONTEN & SIDEBAR (SAMA PERSIS DENGAN DARK) ==========
+  // ========== Pengaturan Jarak Konten & Sidebar ==========
+  // Kurangi gutter antar kolom
   #main-wrapper .row {
-    --bs-gutter-x: 0.75rem;
+    --bs-gutter-x: 0.75rem; // default 1.5rem, jadi setengahnya
   }
 
+  // Perkecil padding horizontal container
   #main-wrapper .container {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
 
+  // Sesuaikan padding main dan aside
   #main-wrapper main {
-    padding-right: 0.25rem;
+    padding-right: 0.25rem; // beri ruang kecil ke aside
   }
 
   #main-wrapper #panel-wrapper {
     padding-left: 0.25rem;
   }
 
-  @media (min-width: 1200px) {
+  // Opsional: ubah proporsi kolom jika ingin sidebar lebih kecil
+  @media (min-width: 1200px) { // khusus xl
     #main-wrapper main {
       flex: 0 0 auto;
-      width: 80%;
+      width: 75%; // Proporsi default agar sejajar dengan Search Bar
     }
     #main-wrapper #panel-wrapper {
       flex: 0 0 auto;
-      width: 20%;
+      width: 25%; // Proporsi default agar sejajar dengan Search Bar
     }
   }
 
-  // Tarik Sidebar agar berada di atas efek kabut/overlay #main-wrapper
+  // -------------------------------------------------------------------
+  // MACOS FINDER STYLE SIDEBAR NAVIGATION (Restored Alignment & Active)
+  // -------------------------------------------------------------------
   #sidebar {
-    z-index: 10 !important;
+    ul li.nav-item {
+      // Inherits default padding to align perfectly with Avatar (top) and Social icons (bottom)
+
+      a.nav-link {
+        padding: 0.5rem 0.8rem !important;
+        border-radius: 8px !important; // Sleek modern rounded capsule
+        transition: all 0.2s ease-in-out !important;
+
+        span {
+          font-size: 0.88rem !important;
+          font-weight: 500 !important;
+          text-transform: capitalize !important; // Overrides Chirpy's UPCASE
+          letter-spacing: -0.01em !important;
+        }
+
+        i {
+          font-size: 0.95rem !important;
+          margin-right: 0.8rem !important; // Tighter precise alignment
+          opacity: 0.85 !important;
+        }
+      }
+    }
   }
 }

@@ -78,56 +78,6 @@ $stars-md: create-stars(100);
 
   body {
     background: transparent !important;
-
-    // Bulan sabit
-    &::before {
-      content: "";
-      position: fixed;
-      z-index: -2;
-      pointer-events: none;
-      top: 3%;
-      right: 3%;
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: transparent;
-      box-shadow: inset -15px -15px 0 2px #d6d6d6,
-                  inset -18px -18px 0 4px rgba(255, 255, 255, 0.1),
-                  0 0 30px 0px rgba(255, 255, 255, 0.3);
-      filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
-      animation: floatMoon 10s ease-in-out infinite alternate; // Lebih cepat
-    }
-
-    // Planet Gas Raksasa / Cyberpunk Planet
-    &::after {
-      content: "";
-      position: fixed;
-      z-index: -2;
-      pointer-events: none;
-      bottom: 10%;
-      left: 10%;
-      width: 160px;
-      height: 160px;
-      border-radius: 50%;
-      // Rendering planet surface yang mulus dan modern
-      background: radial-gradient(circle at 30% 30%, 
-                    #9b59b6 0%, 
-                    #8e44ad 25%, 
-                    #2c3e50 60%, 
-                    #050510 100%);
-      // Shadow tebal untuk memisahkan sisi terang & gelap (3D effect) dan cahaya atmosfer
-      box-shadow: inset -30px -30px 40px rgba(0, 0, 0, 0.9),
-                  inset 10px 10px 30px rgba(155, 89, 182, 0.5),
-                  0 0 50px 15px rgba(142, 68, 173, 0.4);
-      filter: drop-shadow(0 0 15px rgba(155, 89, 182, 0.6));
-      animation: floatPlanet 20s ease-in-out infinite alternate;
-      opacity: 0.95;
-    }
-
-    @media (max-width: 849px) {
-      &::before { opacity: 0.15; }
-      &::after { opacity: 0.15; }
-    }
   }
 
   // ---------- LAPISAN BINTANG ----------
@@ -549,11 +499,39 @@ $stars-md: create-stars(100);
   @media (min-width: 1200px) { // khusus xl
     #main-wrapper main {
       flex: 0 0 auto;
-      width: 80%; // lebih lebar
+      width: 75%; // Proporsi default agar sejajar dengan Search Bar
     }
     #main-wrapper #panel-wrapper {
       flex: 0 0 auto;
-      width: 20%; // sidebar lebih sempit
+      width: 25%; // Proporsi default agar sejajar dengan Search Bar
+    }
+  }
+
+  // -------------------------------------------------------------------
+  // MACOS FINDER STYLE SIDEBAR NAVIGATION (Restored Alignment & Active)
+  // -------------------------------------------------------------------
+  #sidebar {
+    ul li.nav-item {
+      // Inherits default padding to align perfectly with Avatar (top) and Social icons (bottom)
+
+      a.nav-link {
+        padding: 0.5rem 0.8rem !important;
+        border-radius: 8px !important; // Sleek modern rounded capsule
+        transition: all 0.2s ease-in-out !important;
+
+        span {
+          font-size: 0.88rem !important;
+          font-weight: 500 !important;
+          text-transform: capitalize !important; // Overrides Chirpy's UPCASE
+          letter-spacing: -0.01em !important;
+        }
+
+        i {
+          font-size: 0.95rem !important;
+          margin-right: 0.8rem !important; // Tighter precise alignment
+          opacity: 0.85 !important;
+        }
+      }
     }
   }
 }
