@@ -33,9 +33,15 @@ code .
 ```
 Struktur folder akan tampak seperti ini:
 
-   ![Build source](/posts/20260430/struktur-folder.png){: .light .border .normal w='375' h='140' }
-   ![Build source](/posts/20260430/struktur-folder.png){: .dark .normal w='375' h='140' }
-
+```
+├── docker
+│   ├── nginx
+│   │   └── nginx.conf
+│   └── php
+│       ├── Dockerfile
+│       └── init.sh
+├── docker-compose.yml
+```
 
 ## Langkah 2: Konfigurasi
 Setelah berhasil meng-clone repo, selanjutnya cek masing-masing file.
