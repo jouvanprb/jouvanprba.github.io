@@ -1,84 +1,46 @@
-<!-- markdownlint-disable-next-line -->
-<div align="center">
+# Jouvan's Portfolio & Blog
 
-  <!-- markdownlint-disable-next-line -->
-  # Chirpy Jekyll Theme
+This is the repository for my personal website and blog, hosted at [jouvanprba.github.io](https://jouvanprba.github.io).
 
-  A minimal, responsive, and feature-rich Jekyll theme for technical writing.
+## Overview
 
-  [![CI](https://img.shields.io/github/actions/workflow/status/cotes2020/jekyll-theme-chirpy/ci.yml?logo=github)][ci]&nbsp;
-  [![Codacy Badge](https://img.shields.io/codacy/grade/4e556876a3c54d5e8f2d2857c4f43894?logo=codacy)][codacy]&nbsp;
-  [![GitHub license](https://img.shields.io/github/license/cotes2020/jekyll-theme-chirpy?color=goldenrod)][license]&nbsp;
-  [![Gem Version](https://img.shields.io/gem/v/jekyll-theme-chirpy?&logo=RubyGems&logoColor=ghostwhite&label=gem&color=orange)][gem]&nbsp;
-  [![Open in Dev Containers](https://img.shields.io/badge/Dev_Containers-Open-deepskyblue?logo=linuxcontainers)][open-container]
-
-  [**Live Demo** →][demo]
-
-  [![Devices Mockup](https://chirpy-img.netlify.app/commons/devices-mockup.png)][demo]
-
-</div>
+This website is built using [Jekyll](https://jekyllrb.com/) and features a highly customized design. It serves as my portfolio and personal blog where I share my thoughts, projects, and experiences.
 
 ## Features
 
-- Dark Theme
-- Localized UI language
-- Pinned Posts on Home Page
-- Hierarchical Categories
-- Trending Tags
-- Table of Contents
-- Last Modified Date
-- Syntax Highlighting
-- Mathematical Expressions
-- Mermaid Diagrams & Flowcharts
-- Dark Mode Images
-- Embed Media
-- Comment Systems
-- Built-in Search
-- Atom Feeds
-- PWA
-- Web Analytics
-- SEO & Performance Optimization
+- **Custom Design**: A modified and personalized theme tailored for my portfolio.
+- **Responsive Layout**: Optimized for both desktop and mobile devices.
+- **Dark/Light Mode**: Seamless switching between themes with customized aesthetics.
+- **Blog & Portfolio**: Integrated sections for articles and project showcases.
 
-## Documentation
+## Local Development
 
-To learn how to use, develop, and upgrade the project, please refer to the [Wiki][wiki].
+To run this site locally, you'll need Ruby and Bundler installed.
 
-## Contributing
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/jouvanprba/jouvanprba.github.io.git
+   cd jouvanprba.github.io
+   ```
 
-Contributions (_pull requests_, _issues_, and _discussions_) are what make the open-source community such an amazing place
-to learn, inspire, and create. Any contributions you make are greatly appreciated.
-For details, see the "[Contributing Guidelines][contribute-guide]".
+2. Install dependencies:
+   ```bash
+   bundle install
+   ```
+
+3. Run the Jekyll server:
+   ```bash
+   bundle exec jekyll serve
+   ```
+
+4. Open `http://localhost:4000` in your browser.
 
 ## Credits
 
-### Contributors
+This project was originally forked from and built upon the [Chirpy Jekyll Theme](https://github.com/cotes2020/jekyll-theme-chirpy) created by [cotes2020](https://github.com/cotes2020). 
 
-Thanks to [all the contributors][contributors] involved in the development of the project!
-
-[![all-contributors](https://contrib.rocks/image?repo=cotes2020/jekyll-theme-chirpy&columns=16)][contributors]
-<sub> — Made with [contrib.rocks](https://contrib.rocks)</sub>
-
-### Third-Party Assets
-
-This project is built on the [Jekyll][jekyllrb] ecosystem and some [great libraries][lib], and is developed using [VS Code][vscode] as well as tools provided by [JetBrains][jetbrains] under a non-commercial open-source software license.
-
-The avatar and favicon for the project's website are from [ClipartMAX][clipartmax].
+A huge thanks to the original author and contributors for providing such a solid and feature-rich foundation. The theme has since been extensively customized to fit my personal design preferences and requirements.
 
 ## License
 
-This project is published under [MIT License][license].
-
-[gem]: https://rubygems.org/gems/jekyll-theme-chirpy
-[ci]: https://github.com/cotes2020/jekyll-theme-chirpy/actions/workflows/ci.yml?query=event%3Apush+branch%3Amaster
-[codacy]: https://app.codacy.com/gh/cotes2020/jekyll-theme-chirpy/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade
-[license]: https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/LICENSE
-[open-container]: https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/cotes2020/jekyll-theme-chirpy
-[jekyllrb]: https://jekyllrb.com/
-[clipartmax]: https://www.clipartmax.com/middle/m2i8b1m2K9Z5m2K9_ant-clipart-childrens-ant-cute/
-[demo]: https://cotes2020.github.io/chirpy-demo/
-[wiki]: https://github.com/cotes2020/jekyll-theme-chirpy/wiki
-[contribute-guide]: https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/docs/CONTRIBUTING.md
-[contributors]: https://github.com/cotes2020/jekyll-theme-chirpy/graphs/contributors
-[lib]: https://github.com/cotes2020/chirpy-static-assets
-[vscode]: https://code.visualstudio.com/
-[jetbrains]: https://www.jetbrains.com/?from=jekyll-theme-chirpy
+This project is published under the [MIT License](LICENSE).
