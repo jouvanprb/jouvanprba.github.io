@@ -3,11 +3,12 @@ name: Deploy to Firebase
 on:
   push:
     branches: ["main"]
-  workflow_dispatch:
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # Fix Node.js warning
     
     steps:
       - name: Checkout
@@ -16,8 +17,13 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.1'
-          bundler-cache: true
+          ruby-version: '3.3'
+          bundler-cache: false  # Coba false dulu, nanti kita debug
+      
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
       
       - name: Build with Jekyll
         run: bundle exec jekyll build
