@@ -3,9 +3,11 @@ title: Membangun Environment Laravel di Docker Compose
 author: jouvanprb
 description: >-
     Artikel ini membahas setup environment development Laravel berbasis Docker Compose. Stack yang digunakan mencakup Nginx sebagai web server, PHP 8.4-FPM sebagai application server, MySQL 8 sebagai database, dan phpMyAdmin untuk manajemen database via GUI. Semua layanan berjalan dalam container yang terisolasi dan terhubung melalui Docker network.
-categories: [Containerization, Docker]
-tags: [docker, laravel, nginx, mysql]
+categories: [Containerization, Docker, Enviroment Setup]
+tags: [docker, laravel, nginx, mysql, devops]
+image : /posts/20260430/thumbnail-laravel-docker.png
 render_with_liquid: false
+pin : true
 ---
 
 Berikut adalah panduan setup environment Laravel di Docker menggunakan Nginx, PHP 8.4-FPM, MySQL 8, dan phpMyAdmin. Environment ini dirancang agar langsung bisa digunakan untuk development tanpa perlu konfigurasi manual.

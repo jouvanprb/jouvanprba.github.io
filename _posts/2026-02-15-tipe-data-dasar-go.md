@@ -5,6 +5,7 @@ date: 2026-02-15 11:50:00 +0700
 categories: [Programming, Go]
 tags: [golang, data-type]
 render_with_liquid: false
+published : false
 ---
 
 Dalam Bahasa pemrogramman, tipe data merupakan hal yang sangat penting untuk dipahami, karena merupakan fondasi utama dalam menulis code. Begitu juga hal nya di `Golang`{: .filepath}, tipe data digunakan untuk menentukan jenis nilai yang dapat disimpan dalam variabel.

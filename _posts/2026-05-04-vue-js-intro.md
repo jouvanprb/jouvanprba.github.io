@@ -4,6 +4,7 @@ author: jouvanprb
 categories: [Framework, Vue]
 tags: [Javascript]
 render_with_liquid: false
+published : false
 ---
 
 VueJS adalah kerangka kerja JavaScript paling
