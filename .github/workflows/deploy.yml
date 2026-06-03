@@ -28,10 +28,8 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
 
-      - name: Copy Bootstrap SASS to theme vendor directory
-        run: |
-          mkdir -p _sass/vendors
-          cp -r node_modules/bootstrap/scss _sass/vendors/bootstrap
+      - name: Build assets
+        run: npm run build
 
       - name: Build with Jekyll
         run: bundle exec jekyll build --trace
