@@ -34,22 +34,22 @@ Komputasi cloud adalah model penyediaan sumber daya teknologi informasi sesuai p
 
 ## Model Klien-Server
 ```
-                    ┌──────────┐         Permintaan (Request)         ┌────────────┐
-                    │          │ ──────────────────────────────────>  │            │
-                    │  KLIEN   │                                      │   SERVER   │
-                    │          │ <──────────────────────────────────  │            │
-                    └──────────┘         Tanggapan (Response)         └────────────┘
-                        ▲                                                   │
-                        │                                                   │
-                    Contoh:                                           Contoh:
-                    • Browser web                                    • Amazon EC2
-                    • Aplikasi desktop                               • Server virtual
-                    • Perangkat mobile                               • Database server
+    ┌──────────┐         Permintaan (Request)         ┌────────────┐
+    │          │ ──────────────────────────────────>  │            │
+    │  KLIEN   │                                      │   SERVER   │
+    │          │ <──────────────────────────────────  │            │
+    └──────────┘         Tanggapan (Response)         └────────────┘
+        ▲                                                   │
+        │                                                   │
+    Contoh:                                           Contoh:
+    • Browser web                                    • Amazon EC2
+    • Aplikasi desktop                               • Server virtual
+    • Perangkat mobile                               • Database server
 ```
 
 **Alur Komunikasi:**
-- **Klien** mengirimkan permintaan ke server—misalnya saat kamu mengetik alamat situs di browser.
-- **Server** memproses permintaan tersebut dan mengirimkan kembali tanggapan—seperti halaman web yang muncul di layar.
+- **Klien** mengirimkan permintaan ke server, misalnya saat kamu mengetik alamat situs di browser.
+- **Server** memproses permintaan tersebut dan mengirimkan kembali tanggapan, seperti halaman web yang muncul di layar.
 
 Hubungan ini bersifat **timbal balik** *(request-response cycle)*, di mana klien selalu memulai interaksi dan server menyediakan layanan yang diminta.
 

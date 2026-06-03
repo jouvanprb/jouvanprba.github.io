@@ -4,7 +4,7 @@ description: >-
     Mempelajari konfigurasi Ansible untuk berkomunikasi dengan server web, pembuatan playbook otomatisasi instalasi Apache, serta pembuatan playbook khusus dengan instruksi instalasi yang spesifik.
 author: jouvanprb
 categories: [Infra as Code (IaC), Ansible]
-tags: [Ansible, Apache, Web Server]
+tags: [ansible, apache, web-server]
 render_with_liquid: false
 ---
 

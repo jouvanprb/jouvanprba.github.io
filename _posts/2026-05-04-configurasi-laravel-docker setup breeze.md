@@ -4,7 +4,7 @@ author: jouvanprb
 categories: [Framework, Laravel]
 description : >-
     Mempelajari setup Laravel Breeze untuk membangun sistem autentikasi otomatis meliputi login, register, forgot password, email verification, dan profil. Semua fitur siap pakai dalam hitungan menit menggunakan Docker Compose.
-tags: [docker, laravel, laravel-breeze, authentication]
+tags: [docker, laravel, authentication]
 render_with_liquid: false
 ---
 
