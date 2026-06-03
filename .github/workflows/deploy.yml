@@ -14,24 +14,26 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Install Node dependencies
+        run: npm install
+      
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      
-      - name: Install dependencies
-        run: |
-          bundle install
-          npm install
-      
       - name: Build with Jekyll
-        run: bundle exec jekyll build
+        run: |
+          # Symlink bootstrap dari node_modules ke _sass/vendors
+          mkdir -p _sass/vendors
+          ln -sf ../../node_modules/bootstrap/scss _sass/vendors/bootstrap
+          bundle exec jekyll build --trace
         env:
           JEKYLL_ENV: production
       
