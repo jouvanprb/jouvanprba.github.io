@@ -12,12 +12,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build with Docker
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
         run: |
-          docker build -f Dockerfile.prod -t blog-build .
-          docker create --name temp blog-build
-          docker cp temp:/app/_site ./_site
-          docker rm temp
+          bundle install
+          npm ci
+
+      - name: Build
+        run: |
+          npm run build
+          JEKYLL_ENV=production bundle exec jekyll build --trace
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
