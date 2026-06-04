@@ -1,7 +1,11 @@
 # Jouvan's Blog
+
 Hi! I'm Jouvan. I write about things I learn, build, and think about in tech. This blog is where I document my journey and share knowledge with others.
+
 Personal blog by me — sharing insights on software engineering, DevOps automation, cloud infrastructure, and modern tech.
+
 Built with [Jekyll](https://jekyllrb.com/) and the [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) theme, heavily customized.
+
 ---
 
 ## Tech Stack
