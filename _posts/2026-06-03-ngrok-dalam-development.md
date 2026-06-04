@@ -56,7 +56,7 @@ ngrok tcp 22
 Layanan login seperti Google atau Facebook membutuhkan callback URL publik. Ngrok menyediakan URL tersebut untuk keperluan testing.
 
 ## Instalasi
-Kamu dapat mengunjungi situs ini https://ngrok.com/download/ untuk mengunduh ngrok.
+Kamu dapat mengunjungi situs ini [https://ngrok.com/download/](https://ngrok.com/download/) untuk mengunduh ngrok.
 
 Berhubung saya menggunakan os linux, disini saya akan mencontohkan instalasi melalui linux sesuai dengan docs resmi ngrok
 

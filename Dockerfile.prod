@@ -1,0 +1,27 @@
+FROM ruby:3.3.10
+
+# Install Node.js
+RUN apt-get update && apt-get install -y build-essential curl \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean
+
+# Install Jekyll & Bundler
+RUN gem install jekyll bundler
+
+# Set workdir
+WORKDIR /app
+
+# Copy dependency files 
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY package.json package-lock.json* ./
+RUN npm ci
+
+# Copy semua file
+COPY . .
+
+# Build production
+RUN npm run build
+RUN JEKYLL_ENV=production bundle exec jekyll build --trace
