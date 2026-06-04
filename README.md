@@ -1,46 +1,43 @@
-# Jouvan's Portfolio & Blog
+# Jouvan's Blog
+Hi! I'm Jouvan. I write about things I learn, build, and think about in tech. This blog is where I document my journey and share knowledge with others.
+Personal blog by me — sharing insights on software engineering, DevOps automation, cloud infrastructure, and modern tech.
+Built with [Jekyll](https://jekyllrb.com/) and the [Chirpy](https://github.com/cotes2020/jekyll-theme-chirpy) theme, heavily customized.
+---
 
-This is the repository for my personal website and blog, hosted at [jouvanprba.github.io](https://jouvanprba.github.io).
+## Tech Stack
 
-## Overview
+- **Jekyll** — Static site generator
+- **Chirpy Theme** by [cotes2020](https://github.com/cotes2020)
+- **Firebase Hosting** — Production
+- **GitHub Actions** — CI/CD
+- **Docker Compose** — Local development
 
-This website is built using [Jekyll](https://jekyllrb.com/) and features a highly customized design. It serves as my portfolio and personal blog where I share my thoughts, projects, and experiences.
+---
 
-## Features
+## Development
 
-- **Custom Design**: A modified and personalized theme tailored for my portfolio.
-- **Responsive Layout**: Optimized for both desktop and mobile devices.
-- **Dark/Light Mode**: Seamless switching between themes with customized aesthetics.
-- **Blog & Portfolio**: Integrated sections for articles and project showcases.
+`docker compose up` — runs locally with auto-reload.
 
-## Local Development
+---
 
-To run this site locally, you'll need Ruby and Bundler installed.
+## Deployment
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/jouvanprba/jouvanprba.github.io.git
-   cd jouvanprba.github.io
-   ```
+Push to `main` triggers GitHub Actions:
 
-2. Install dependencies:
-   ```bash
-   bundle install
-   ```
+1. Checkout → Setup Ruby & Node
+2. Install dependencies → Build Jekyll
+3. Deploy to Firebase Hosting
 
-3. Run the Jekyll server:
-   ```bash
-   bundle exec jekyll serve
-   ```
+Workflow: `.github/workflows/deploy.yml`
 
-4. Open `http://localhost:4000` in your browser.
+---
 
 ## Credits
 
-This project was originally forked from and built upon the [Chirpy Jekyll Theme](https://github.com/cotes2020/jekyll-theme-chirpy) created by [cotes2020](https://github.com/cotes2020). 
+Based on the [Chirpy Jekyll Theme](https://github.com/cotes2020/jekyll-theme-chirpy) by [cotes2020](https://github.com/cotes2020).
 
-A huge thanks to the original author and contributors for providing such a solid and feature-rich foundation. The theme has since been extensively customized to fit my personal design preferences and requirements.
+---
 
 ## License
 
-This project is published under the [MIT License](LICENSE).
+MIT
