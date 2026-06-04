@@ -13,7 +13,7 @@ RUN gem install jekyll bundler
 WORKDIR /app
 
 # Copy dependency files 
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock* ./
 RUN bundle install
 
 COPY package.json package-lock.json* ./
