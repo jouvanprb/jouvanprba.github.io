@@ -7,7 +7,6 @@ categories: [Containerization, Docker, Enviroment Setup]
 tags: [docker, laravel, nginx, mysql, devops]
 image : /posts/20260430/thumbnail-laravel-docker.png
 render_with_liquid: false
-pin : true
 ---
 
 Berikut adalah panduan setup environment Laravel di Docker menggunakan Nginx, PHP 8.4-FPM, MySQL 8, dan phpMyAdmin. Environment ini dirancang agar langsung bisa digunakan untuk development tanpa perlu konfigurasi manual.
