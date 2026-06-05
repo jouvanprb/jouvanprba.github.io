@@ -3,12 +3,14 @@
   $y0: random(2000);
   $c0: nth($colors, random(length($colors)));
   $value: '#{$x0}px #{$y0}px #{$c0}, #{$x0}px #{$y0 + 2000}px #{$c0}';
+
   @for $i from 2 through $n {
     $x: random(2000);
     $y: random(2000);
     $color: nth($colors, random(length($colors)));
     $value: '#{$value}, #{$x}px #{$y}px #{$color}, #{$x}px #{$y + 2000}px #{$color}';
   }
+
   @return unquote($value);
 }
 
@@ -17,49 +19,64 @@ $stars-md: create-stars(100);
 
 @keyframes animStar {
   from { transform: translateY(0); }
+
   to   { transform: translateY(-2000px); }
 }
 
 @keyframes twinkle {
   0%   { opacity: 0.4; }
+
   50%  { opacity: 1; }
+
   100% { opacity: 0.4; }
 }
 
 @keyframes floatMoon {
   from { transform: translateY(0) translateX(0) rotate(-10deg); }
+
   to   { transform: translateY(-30px) translateX(20px) rotate(0deg); }
 }
 
 @keyframes floatPlanet {
   from { transform: translateY(0) translateX(0); }
+
   to   { transform: translateY(30px) translateX(-20px); }
 }
 
 @keyframes rotateRing {
   from { transform: rotate(0deg); }
+
   to   { transform: rotate(360deg); }
 }
 
 @keyframes moveNebula {
   from { background-position: 0% 0%, 0% 0%, 0% 0%; }
+
   to   { background-position: 100% 100%, 80% 120%, 120% 80%; }
 }
 
 // Shooting star animations
 @keyframes shoot1 {
   0%   { transform: translateX(0) translateY(0) scale(1); opacity: 1; }
+
   50%  { opacity: 1; }
+
   100% { transform: translateX(-600px) translateY(600px) scale(0.3); opacity: 0; }
 }
+
 @keyframes shoot2 {
   0%   { transform: translateX(0) translateY(0) scale(1); opacity: 0; }
+
   40%  { opacity: 1; }
+
   100% { transform: translateX(-800px) translateY(400px) scale(0.2); opacity: 0; }
 }
+
 @keyframes shoot3 {
   0%   { transform: translateX(0) translateY(0) scale(1); opacity: 0; }
+
   60%  { opacity: 1; }
+
   100% { transform: translateX(-500px) translateY(700px) scale(0.4); opacity: 0; }
 }
 
@@ -69,8 +86,8 @@ $stars-md: create-stars(100);
   // ---------- BASE: Nebula + Space ----------
   // Terapkan background dasar ke html (induk) agar elemen z-index negatif di body tidak tenggelam.
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(55, 0, 100, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgba(0, 20, 60, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 50%, rgb(55 0 100 / 15%) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgb(0 20 60 / 30%) 0%, transparent 50%),
     radial-gradient(ellipse at bottom, #111520 0%, #040508 100%);
   background-size: 200% 200%, 200% 200%, auto;
   background-attachment: fixed;
@@ -169,8 +186,8 @@ $stars-md: create-stars(100);
 
   /* Framework color */
   --main-bg: transparent;
-  --mask-bg: rgba(68, 69, 70, 0.6);
-  --main-border-color: rgba(44, 45, 45, 0.4);
+  --mask-bg: rgb(68 69 70 / 60%);
+  --main-border-color: rgb(44 45 45 / 40%);
 
   /* Common color */
   --text-color: rgb(175 176 177);
@@ -182,11 +199,11 @@ $stars-md: create-stars(100);
   --blockquote-text-color: #868686;
   --link-color: rgb(138 180 248);
   --link-underline-color: rgb(82 108 150);
-  --button-bg: rgba(30, 30, 30, 0.6);
-  --btn-border-color: rgba(46, 47, 49, 0.5);
+  --button-bg: rgb(30 30 30 / 60%);
+  --btn-border-color: rgb(46 47 49 / 50%);
   --btn-backtotop-color: var(--text-color);
-  --btn-backtotop-border-color: rgba(33, 33, 34, 0.5);
-  --card-header-bg: rgba(41, 41, 41, 0.4);
+  --btn-backtotop-border-color: rgb(33 33 34 / 50%);
+  --card-header-bg: rgb(41 41 41 / 40%);
   --checkbox-color: rgb(118 120 121);
   --checkbox-checked-color: var(--link-color);
   --img-bg: radial-gradient(circle, rgb(22 22 24) 0%, rgb(32 32 32) 100%);
@@ -204,7 +221,7 @@ $stars-md: create-stars(100);
   --sidebar-border-color: transparent;
   --sidebar-muted-color: #868686;
   --sidebar-active-color: rgb(255 255 255 / 95%);
-  --sidebar-hover-bg: rgba(255, 255, 255, 0.05);
+  --sidebar-hover-bg: rgb(255 255 255 / 5%);
   --sidebar-btn-bg: transparent;
   --sidebar-btn-color: #787878;
   --avatar-border-color: rgb(206 206 206 / 90%);
@@ -214,7 +231,7 @@ $stars-md: create-stars(100);
   --topbar-text-color: var(--text-color);
   --search-border-color: transparent;
   --search-icon-color: rgb(100 102 105);
-  --input-focus-border-color: rgba(255, 255, 255, 0.2);
+  --input-focus-border-color: rgb(255 255 255 / 20%);
 
   // Pemasangan Background Mask (Glassmorphism murni transparan) pada Wrapper dan TOC Bar
   #topbar-wrapper, #toc-bar {
@@ -233,14 +250,14 @@ $stars-md: create-stars(100);
   --toc-highlight: rgb(116 178 243);
   --toc-popup-border-color: #373737;
   --tag-hover: rgb(43 56 62);
-  --tb-odd-bg: rgba(37, 37, 38, 0.4); /* odd rows of the posts' table */
-  --tb-even-bg: rgba(31, 31, 34, 0.4); /* even rows of the posts' table */
+  --tb-odd-bg: rgb(37 37 38 / 40%); /* odd rows of the posts' table */
+  --tb-even-bg: rgb(31 31 34 / 40%); /* even rows of the posts' table */
   --tb-border-color: var(--tb-odd-bg);
   --footnote-target-bg: rgb(63 81 181);
   --btn-share-color: #6c757d;
   --btn-share-hover-color: #bfc1ca;
-  --card-bg: rgba(30, 30, 35, 0.4);
-  --card-hover-bg: rgba(70, 77, 81, 0.5);
+  --card-bg: rgb(30 30 35 / 40%);
+  --card-hover-bg: rgb(70 77 81 / 50%);
   --card-shadow: rgb(21 21 21 / 72%) 0 6px 18px 0,
     rgb(137 135 135 / 24%) 0 0 0 1px;
   --kbd-wrap-color: #6a6a6a;
@@ -273,11 +290,11 @@ $stars-md: create-stars(100);
   --timeline-year-dot-color: var(--timeline-color);
 
   /* Code highlight colors */
-  --language-border-color: rgba(45, 45, 45, 0.4);
-  --highlight-bg-color: rgba(21, 21, 21, 0.5);
+  --language-border-color: rgb(45 45 45 / 40%);
+  --highlight-bg-color: rgb(21 21 21 / 50%);
   --highlighter-rouge-color: #c9def1;
   --highlight-lineno-color: #808080;
-  --inline-code-bg: rgba(255, 255, 255, 0.08);
+  --inline-code-bg: rgb(255 255 255 / 8%);
   --code-color: #b0b0b0;
   --code-header-text-color: #6a6a6a;
   --code-header-muted-color: #353535;
@@ -315,11 +332,11 @@ $stars-md: create-stars(100);
   #archives li:nth-child(odd) {
     background-image: linear-gradient(
       to left,
-      rgba(26, 26, 30, 0),
-      rgba(39, 39, 45, 0.4),
-      rgba(39, 39, 45, 0.5),
-      rgba(39, 39, 45, 0.4),
-      rgba(26, 26, 30, 0)
+      rgb(26 26 30 / 0%),
+      rgb(39 39 45 / 40%),
+      rgb(39 39 45 / 50%),
+      rgb(39 39 45 / 40%),
+      rgb(26 26 30 / 0%)
     );
   }
 
@@ -474,6 +491,7 @@ $stars-md: create-stars(100);
   .highlight .ss {
     color: #90a959;
   }
+
   // ========== Pengaturan Jarak Konten & Sidebar ==========
   // Kurangi gutter antar kolom
   #main-wrapper .row {
@@ -501,6 +519,7 @@ $stars-md: create-stars(100);
       flex: 0 0 auto;
       width: 75%; // Proporsi default agar sejajar dengan Search Bar
     }
+
     #main-wrapper #panel-wrapper {
       flex: 0 0 auto;
       width: 25%; // Proporsi default agar sejajar dengan Search Bar
