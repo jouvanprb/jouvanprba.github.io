@@ -1,3 +1,4 @@
+/* stylelint-disable keyframes-name-pattern, scss/no-global-function-names */
 @function create-stars($n, $colors: ('#fff', '#fff8dc', '#add8e6', '#ffd700')) {
   $x0: random(2000);
   $y0: random(2000);
@@ -49,10 +50,10 @@ $stars-md: create-stars(100);
   to   { transform: rotate(360deg); }
 }
 
-@keyframes moveNebula {
+@keyframes move-nebula-dark {
   from { background-position: 0% 0%, 0% 0%, 0% 0%; }
 
-  to   { background-position: 100% 100%, 80% 120%, 120% 80%; }
+  to   { background-position: 100% 100%, 80% 120%, 0% 0%; }
 }
 
 // Shooting star animations
@@ -91,7 +92,7 @@ $stars-md: create-stars(100);
     radial-gradient(ellipse at bottom, #111520 0%, #040508 100%);
   background-size: 200% 200%, 200% 200%, auto;
   background-attachment: fixed;
-  animation: moveNebula 40s ease-in-out infinite alternate; // Lebih cepat
+  animation: move-nebula-dark 40s ease-in-out infinite alternate; // Lebih cepat
 
   body {
     background: transparent !important;

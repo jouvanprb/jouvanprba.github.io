@@ -50,7 +50,7 @@ $stars-md: create-stars(100);
   to   { transform: rotate(360deg); }
 }
 
-@keyframes moveNebula {
+@keyframes move-nebula-light {
   from { background-position: 0% 0%, 0% 0%, 0% 0%; }
 
   to   { background-position: 100% 100%, 80% 120%, 0% 0%; }
@@ -87,13 +87,12 @@ $stars-md: create-stars(100);
   // ---------- BASE: Nebula + Space (Light Mode) ----------
   // Terapkan background dasar ke html (induk) agar elemen z-index negatif di body tidak tenggelam.
   background:
-    radial-gradient(ellipse at 20% 50%, rgb(130 170 255 / 25%) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 70%, rgb(255 180 210 / 30%) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom, #f5f7fa 0%, #e4eaf5 100%);
+    radial-gradient(ellipse at 20% 50%, rgb(130 170 255 / 15%) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgb(255 253 230 / 25%) 0%, transparent 50%),
+    linear-gradient(180deg, #e3f2fd 0%, #ffffff 60%, #fef9ef 100%);
   background-size: 200% 200%, 200% 200%, auto;
   background-attachment: fixed;
-  background-repeat: no-repeat;
-  animation: moveNebula 40s ease-in-out infinite alternate;
+  animation: move-nebula-light 40s ease-in-out infinite alternate;
 
   body {
     background: transparent !important;
