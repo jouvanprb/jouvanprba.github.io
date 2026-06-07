@@ -4,13 +4,13 @@ author: jouvanprb
 categories: [Continuous Integration / Continuous Deployment, Principles of CI/CD]
 description: >-
     Mempelajari prinsip CI/CD dari pengertian, proses, keuntungan, perbedaan Delivery vs Deployment, dan tools yang umum dipakai.
-tags: [continuous integration, continuous delivery, continuous deployment, CI/CD pipeline, DevOps]
+tags: [CI/CD pipeline, DevOps]
 image: /posts/20260605/thumbnail-ci-cd-principles.png
 render_with_liquid: false
 pin: true
 ---
 
-**CI/CD** adalah singkatan dari **Continuous Integration** dan **Continuous Deployment**. Praktik ini menghubungkan tim development dengan tim operations lewat otomatisasi.
+**CI/CD** adalah singkatan dari **Continuous Integration** dan **Continuous Delivery atau Continuous Deployment**. Praktik ini menghubungkan tim development dengan tim operations lewat otomatisasi.
 
 Intinya: setiap perubahan kode dari developer bisa langsung masuk ke proses **build, testing, dan rilis** secara otomatis. Tanpa CI/CD, semua proses itu dikerjakan manual dan rawan kesalahan.
 
