@@ -8,7 +8,6 @@ description: >-
 tags: [docker, windows, CI/CD pipeline, DevOps]
 image: /posts/20260607/docker-thumbnail-install.webp
 render_with_liquid: false
-pin: true
 ---
 
 Docker adalah platform containerization yang memungkinkan Anda membangun, mengelola, dan menjalankan aplikasi dalam lingkungan terisolasi yang disebut container. Docker dapat diinstall di tiga sistem operasi utama: Linux, Windows, dan MacOS.

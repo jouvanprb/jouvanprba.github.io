@@ -7,7 +7,6 @@ description: >-
 tags: [cloud-fundamentals, AWS]
 image: /posts/20260604/thumbnail-aws-fundamental.png
 render_with_liquid: false
-pin : true
 ---
 
 Amazon Web Services (AWS) adalah platform cloud yang menyediakan lebih dari 200 layanan, mencakup komputasi, penyimpanan, basis data, analitik, jaringan, alat pengembang, machine learning, Internet of Things, dan keamanan. Semua layanan ini tersedia tanpa perlu memiliki server fisik sendiri.
