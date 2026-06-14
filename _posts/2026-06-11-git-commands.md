@@ -52,5 +52,31 @@ render_with_liquid: false
 | `git status` | Melihat keadaan working directory dan snapshot staged dari perubahan | `git status` |
 | `git --version` | Menampilkan versi Git yang terinstal di sistem | `git --version` |
 
+
+## Glosarium Git
+
+| Istilah | Definisi |
+|---|---|
+| Cloning | Proses membuat salinan kode proyek beserta riwayat versi lengkapnya dari repositori remote ke mesin lokal. |
+| Commit | Snapshot keadaan proyek pada titik waktu tertentu, disertai deskripsi perubahan yang dibuat. |
+| Developer | Pemrogram komputer yang bertanggung jawab menulis kode. |
+| Distributed version control system (DVCS) | Sistem yang melacak perubahan kode di mana pun kode disimpan. Banyak pengguna dapat bekerja pada codebase yang sama, mencerminkan codebase di komputer masing-masing, sementara perangkat lunak DVCS membantu sinkronisasi. |
+| Fork | Salinan sebuah repositori ke dalam akun GitHub Anda. |
+| Forking | Proses membuat salinan repositori yang dapat dikerjakan tanpa memengaruhi repositori asli. |
+| GitHub | Layanan web-hosted untuk repositori Git. |
+| Git | Perangkat lunak gratis dan open-source yang didistribusikan di bawah GNU General Public License. Git adalah DVCS yang memungkinkan pengguna memiliki salinan proyek sendiri di komputer mereka di mana pun di dunia. |
+| Integrator | Peran yang bertanggung jawab mengelola perubahan yang dibuat oleh developer. |
+| Main branch | Branch yang menyimpan versi kode yang dapat di-deploy. Branch main dibuat secara default dan bersifat definitif. |
+| Merge | Proses menggabungkan perubahan dari satu branch ke branch lain, biasanya menggabungkan branch fitur ke branch main. |
+| Origin | Istilah yang merujuk pada repositori tempat salinan di-clone. |
+| Pull request | Proses yang digunakan untuk meminta seseorang mereview dan menyetujui perubahan sebelum menjadi final. |
+| Remote repositories | Repositori yang disimpan di tempat lain, bisa di internet, di jaringan, atau di komputer lokal. |
+| Repository administrator | Peran yang bertanggung jawab mengonfigurasi dan menjaga akses ke repositori. |
+| Repository | Struktur data untuk menyimpan dokumen, termasuk kode sumber aplikasi. Berisi folder proyek yang diatur untuk version control. |
+| Staging area | Area di mana commit dapat diformat dan direview sebelum menyelesaikan commit. |
+| Upstream | Istilah yang digunakan developer untuk merujuk pada sumber asli tempat salinan lokal di-clone. |
+| Version control | Sistem yang memungkinkan Anda melacak perubahan pada dokumen. Proses ini memungkinkan pemulihan versi dokumen yang lebih lama jika terjadi kesalahan. |
+
+
 ## Kesimpulan
 Git adalah alat version control yang sangat berguna dalam proyek pengembangan apa pun. Dengan memahami perintah-perintah di atas beserta contoh kodenya, Anda bisa mengelola kode sendiri maupun berkolaborasi dalam tim secara efisien. Mulai dari inisialisasi repo, staging, commit, branching, hingga sinkronisasi dengan remote dan fork upstream.
