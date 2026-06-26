@@ -6,7 +6,6 @@ description: >-
     Panduan installasi Docker Engine di Windows melalui WSL2 sebagai alternatif
     ringan pengganti Docker Desktop. Step-by-step dari awal hingga siap digunakan.
 tags: [docker, windows, CI/CD pipeline, DevOps]
-image: /posts/20260607/docker-thumbnail-install.webp
 render_with_liquid: false
 ---
 

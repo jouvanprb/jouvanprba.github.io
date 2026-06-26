@@ -5,7 +5,6 @@ categories: [Cloud Computing, AWS Fundamentals]
 description: >-
     Artikel ini bertujuan untuk memahami dasar-dasar komputasi cloud berdasarkan referensi AWS. Mencakup definisi, manfaat, model layanan, infrastruktur global, dan strategi menghadapi kegagalan.
 tags: [cloud-fundamentals, AWS]
-image: /posts/20260604/thumbnail-aws-fundamental.png
 render_with_liquid: false
 ---
 
