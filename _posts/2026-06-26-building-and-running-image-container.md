@@ -21,12 +21,9 @@ Step untuk membuat container Docker:
 flowchart LR
     A[📄 Dockerfile] -->|docker build| B[📦 Image]
     B -->|docker run| C[🚀 Container]
-    classDef yellow fill:#fef3c7,stroke:#f59e0b,color:#92400e
-    classDef blue fill:#dbeafe,stroke:#3b82f6,color:#1e3a5f
-    classDef green fill:#d1fae5,stroke:#10b981,color:#064e3b
-    class A yellow
-    class B blue
-    class C green
+    style A fill:#fef3c7,stroke:#f59e0b,color:#92400e
+    style B fill:#dbeafe,stroke:#3b82f6,color:#1e3a5f
+    style C fill:#d1fae5,stroke:#10b981,color:#064e3b
 </div>
 
 ## Dockerfile example
