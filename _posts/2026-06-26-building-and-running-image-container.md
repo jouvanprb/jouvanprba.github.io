@@ -19,11 +19,8 @@ Step untuk membuat container Docker:
 
 <div class="mermaid">
 flowchart LR
-    A[📄 Dockerfile] -->|docker build| B[📦 Image]
-    B -->|docker run| C[🚀 Container]
-    style A fill:#fef3c7,stroke:#f59e0b,color:#92400e
-    style B fill:#dbeafe,stroke:#3b82f6,color:#1e3a5f
-    style C fill:#d1fae5,stroke:#10b981,color:#064e3b
+    A[Dockerfile] -->|docker build| B[Image]
+    B -->|docker run| C[Container]
 </div>
 
 ## Dockerfile example
