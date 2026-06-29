@@ -95,11 +95,5 @@ layout: compress
       {% assign _include_path = _include | append: '.html' %}
       {% include {{ _include_path }} %}
     {% endfor %}
-
-    {% include_cached search-loader.html lang=lang %}
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.min.js"></script>
-    <script>
-      mermaid.initialize({ startOnLoad: true, theme: 'default' });
-    </script>
   </body>
 </html>
