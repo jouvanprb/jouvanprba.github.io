@@ -17,11 +17,13 @@ Step untuk membuat container Docker:
 2. Melakukan docker build untuk menghasilkan Docker Image
 3. Menjalankan docker run untuk membuat Container dari image tersebut
 
+{% raw %}
 <div class="mermaid">
 flowchart LR
     A[Dockerfile] -->|docker build| B[Image]
     B -->|docker run| C[Container]
 </div>
+{% endraw %}
 
 ## Dockerfile example
 Contoh berkas Dockerfile ini memiliki perintah from dan CMD
