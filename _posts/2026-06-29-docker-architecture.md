@@ -1,7 +1,7 @@
 ---
 title: Memahami Arsitektur Docker
 author: jouvanprb
-categories: Containerization, Docker
+categories: [Containerization, Docker]
 description: >- 
     Artikel ini membahas tentang arsitektur Docker, mulai dari client, host, 
     daemon, registry, hingga komponen yang dikelola seperti images, containers, 

@@ -1,7 +1,7 @@
 ---
 title: Membangun dan Menjalankan image Kontainer
 author: jouvanprb
-categories: Containerization, Docker
+categories: [Containerization, Docker]
 description: >- 
     Setelah membaca artikel ini, anda dapat memahami bagaimana membangun container image dengan menggunakan Dockerfile, 
     membuat container berjalan menggunakan image,
